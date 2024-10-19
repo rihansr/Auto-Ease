@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "493565510971",
+    "project_id": "auto-ease-439108",
+    "storage_bucket": "auto-ease-439108.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493565510971:android:864d75042f42baef45631e",
+        "android_client_info": {
+          "package_name": "com.example.autoease"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGBXqGE32h7Q3n9NXMEOyIMqBMGWixeag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
