@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'core/config/app_config.dart';
+import 'core/config/app_settings.dart';
+import 'core/config/provider_config.dart';
+import 'core/config/theme_config.dart';
+import 'core/routing/routing.dart';
+import 'core/service/navigation_service.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+Future<void> main() async =>
+    await appConfig.init().then((_) => runApp(const MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AutoEase',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
+    return MultiProvider(
+      providers: providers,
+      child: ValueListenableBuilder(
+        valueListenable: appSettings.settings,
+        builder: (_, settings, __) => MaterialApp.router(
+          title: 'AutoEase',
+          debugShowCheckedModeBanner: false,
+          scaffoldMessengerKey: navigator.scaffoldMessengerKey,
+          themeMode: settings.themeMode,
+          theme: theming(ThemeMode.light),
+          darkTheme: theming(ThemeMode.dark),
+          locale: settings.locale,
+          builder: (context, child) => ResponsiveBreakpoints.builder(
+            child: child!,
+            breakpoints: [
+              const Breakpoint(start: 0, end: 450, name: MOBILE),
+              const Breakpoint(start: 451, end: 800, name: TABLET),
+              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+            ],
+          ),
+          routerConfig: routing,
+        ),
       ),
-      home: Container(),
     );
   }
 }
