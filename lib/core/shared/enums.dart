@@ -2,6 +2,10 @@ import 'dart:ui';
 
 enum AlertType { success, error, info }
 
+enum Role { admin, mechanic, customer }
+
+enum BookingStatus { pending, accepted, completed, cancelled }
+
 enum Language {
   english,
   newZealand;
