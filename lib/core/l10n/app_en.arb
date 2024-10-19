@@ -1,11 +1,96 @@
 {
   "@@locale": "en",
   "@_TITLES": "<-----------------TITLES----------------->",
+  "enterYourDetails": "Welcome back! Please enter your details.",
   "@_LABELS": "<-----------------LABELS----------------->",
   "appName": "AutoEase",
+  "login": "Log in",
+  "signIn": "Sign In",
+  "register": "Register",
+  "signUp": "Sign Up",
+  "name": "Name",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
   "okay": "Okay",
   "retry": "Retry",
+  "cancel": "Cancel",
   "@_HINTS": "<-----------------HINTS----------------->",
+  "nameHint": "John Doe",
+  "emailHint": "johndoe@example.com",
+  "passwordHint": "••••••••",
   "@_MESSAGES": "<-----------------MESSAGES----------------->",
-  "someErrorOccured": "Some Error Occured!"
+  "someErrorOccured": "Some Error Occured!",
+  "emptyField": "{field, select, null{Field} other {{field}}} is required",
+  "@emptyField": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "inputLengthError": "{field, select, null{Field must be {min}-{max} characters long} other {{field} must be {min}-{max} characters long}}",
+  "@inputLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMinLengthError": "{field, select, null{Field must have at least {min} characters} other {{field} must have at least {min} characters}}",
+  "@inputMinLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMaxLengthError": "{field, select, null{Field can contain upto {max} characters} other {{field} can contain upto {max} characters}}",
+  "@inputMaxLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMaxValueError": "{field, select, null{Field max limit {value} characters} other {{field} max limit {value}}}",
+  "@inputMaxValueError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "oldPassword": "You entered an old password",
+  "fieldNotMatch": "{field, select, null{Field} other {{field}}} doesn't match",
+  "@fieldNotMatch": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "notValidField": "Enter a valid {field, select, null{Field} other {{field}}}",
+  "@notValidField": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  }
 }
