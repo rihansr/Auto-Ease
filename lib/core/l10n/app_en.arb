@@ -2,6 +2,8 @@
   "@@locale": "en",
   "@_TITLES": "<-----------------TITLES----------------->",
   "enterYourDetails": "Welcome back! Please enter your details.",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "dontHaveAnAccount": "New to AutoEase?",
   "@_LABELS": "<-----------------LABELS----------------->",
   "appName": "AutoEase",
   "login": "Log in",

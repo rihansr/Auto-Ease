@@ -18,34 +18,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
     return MultiProvider(
       providers: providers,
       child: ValueListenableBuilder(
         valueListenable: appSettings.settings,
-        builder: (_, settings, __) => MaterialApp.router(
-          title: 'AutoEase',
-          debugShowCheckedModeBanner: false,
-          scaffoldMessengerKey: navigator.scaffoldMessengerKey,
-          themeMode: settings.themeMode,
-          theme: theming(ThemeMode.light),
-          darkTheme: theming(ThemeMode.dark),
-          locale: settings.language.locale,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          builder: (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
-            breakpoints: [
-              const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
-            ],
-          ),
-          routerConfig: routing,
-        ),
+        builder: (_, settings, __) {
+          SystemChrome.setSystemUIOverlayStyle(
+            SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: settings.themeMode == ThemeMode.dark
+                  ? Brightness.light
+                  : Brightness.dark,
+            ),
+          );
+          return MaterialApp.router(
+            title: 'AutoEase',
+            debugShowCheckedModeBanner: false,
+            scaffoldMessengerKey: navigator.scaffoldMessengerKey,
+            themeMode: settings.themeMode,
+            theme: theming(ThemeMode.light),
+            darkTheme: theming(ThemeMode.dark),
+            locale: settings.language.locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            builder: (context, child) => ResponsiveBreakpoints.builder(
+              child: child!,
+              breakpoints: [
+                const Breakpoint(start: 0, end: 450, name: MOBILE),
+                const Breakpoint(start: 451, end: 800, name: TABLET),
+                const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+                const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+              ],
+            ),
+            routerConfig: routing,
+          );
+        },
       ),
     );
   }

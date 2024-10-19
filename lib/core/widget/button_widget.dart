@@ -34,15 +34,15 @@ class Button<T> extends StatelessWidget {
     this.label,
     this.background,
     this.borderTint = Colors.transparent,
-    this.radius = 8,
+    this.radius = 2,
     this.fontStyle,
     this.fontColor,
     this.fontSize,
     this.leading,
     this.trailing,
     this.fontWeight,
-    this.margin = const EdgeInsets.symmetric(vertical: 12),
-    this.padding = const EdgeInsets.fromLTRB(16, 18, 16, 18),
+    this.margin = const EdgeInsets.symmetric(vertical: 8),
+    this.padding = const EdgeInsets.all(12),
     this.contentSpacing = 18,
     this.minFontSize,
     this.borderSize = 0,
@@ -59,7 +59,7 @@ class Button<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     TextStyle labelStyle =
-        (this.fontStyle ?? theme.textTheme.titleLarge)!.copyWith(
+        (this.fontStyle ?? theme.textTheme.titleMedium)!.copyWith(
       color: disable
           ? null
           : fontColor ?? this.fontStyle?.color ?? theme.colorScheme.onPrimary,

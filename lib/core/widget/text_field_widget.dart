@@ -31,8 +31,8 @@ class TextFieldWidget extends StatefulWidget {
     this.enableInteractiveSelection = true,
     this.typeable = true,
     this.enabled = true,
-    this.margin = const EdgeInsets.symmetric(vertical: 12),
-    this.padding = const EdgeInsets.all(16),
+    this.margin = const EdgeInsets.symmetric(vertical: 8),
+    this.padding = const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
     this.hintStyle,
     this.style,
     this.textAlign = TextAlign.start,
@@ -71,7 +71,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool enabled;
   final EdgeInsets margin;
   final double titleSpacing;
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
 
   //hardly needed options
   final TextStyle? hintStyle;
@@ -122,7 +122,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textStyle = widget.style ?? theme.textTheme.bodyLarge;
+    final textStyle = widget.style ?? theme.textTheme.titleMedium;
     return Padding(
       padding: widget.margin,
       child: Column(
@@ -133,7 +133,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                 text: TextSpan(
               text: widget.title,
               style: widget.titleStyle ??
-                  theme.textTheme.bodyLarge
+                  theme.textTheme.titleSmall
                       ?.copyWith(fontWeight: FontWeight.w600),
               children: widget.validator != null
                   ? [
@@ -189,7 +189,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
               contentPadding: widget.padding,
               errorMaxLines: 2,
               prefixIconConstraints: BoxConstraints(
-                minWidth: theme.iconTheme.size! + (widget.padding?.left ?? 0),
+                minWidth: theme.iconTheme.size! + widget.padding.left,
               ),
               prefix: widget.prefix,
               prefixIcon: widget.prefixIcon,

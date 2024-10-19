@@ -16,7 +16,7 @@ ThemeData theming(ThemeMode mode) {
   return ThemeData(
     fontFamily: kFontFamily,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    useMaterial3: true,
+    useMaterial3: false,
     colorScheme: ColorScheme(
       brightness: mode == ThemeMode.light ? Brightness.light : Brightness.dark,
       primary: colorPalette.primary,
@@ -57,7 +57,6 @@ ThemeData theming(ThemeMode mode) {
       centerTitle: true,
       iconTheme: IconThemeData(color: colorPalette.icon, size: 24),
       actionsIconTheme: IconThemeData(color: colorPalette.subtitle, size: 24),
-      toolbarHeight: 88,
       titleTextStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
