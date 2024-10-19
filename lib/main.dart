@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
           themeMode: settings.themeMode,
           theme: theming(ThemeMode.light),
           darkTheme: theming(ThemeMode.dark),
-          locale: settings.locale,
+          locale: settings.language.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           builder: (context, child) => ResponsiveBreakpoints.builder(
             child: child!,
             breakpoints: [

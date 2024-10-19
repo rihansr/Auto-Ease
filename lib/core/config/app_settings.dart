@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/settings_model.dart';
+import '../shared/enums.dart';
 import '../shared/local_storage.dart';
 
 final AppSettings appSettings = AppSettings.value;
@@ -24,8 +25,8 @@ class AppSettings {
   ThemeMode get theme => settings.value.themeMode;
 
   // Locale
-  set language(Locale locale) =>
-      _settings = settings.value.copyWith(locale: locale);
+  set language(Language language) =>
+      _settings = settings.value.copyWith(language: language);
 
-  Locale get language => settings.value.locale;
+  Language get language => settings.value.language;
 }

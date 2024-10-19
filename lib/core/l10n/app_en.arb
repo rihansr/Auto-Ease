@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "@_TITLES": "<-----------------TITLES----------------->",
+  "@_LABELS": "<-----------------LABELS----------------->",
+  "appName": "AutoEase",
+  "okay": "Okay",
+  "retry": "Retry",
+  "@_HINTS": "<-----------------HINTS----------------->",
+  "@_MESSAGES": "<-----------------MESSAGES----------------->",
+  "someErrorOccured": "Some Error Occured!"
+}

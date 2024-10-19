@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../service/navigation_service.dart';
 
-final dimen = Dimen.value;
+final dimen = _Dimen.value;
 
-class Dimen {
-  static Dimen get value => Dimen._();
-  Dimen._();
+class _Dimen {
+  static _Dimen get value => _Dimen._();
+  _Dimen._();
 
   final Size size = MediaQuery.sizeOf(navigator.context);
   final double height = MediaQuery.sizeOf(navigator.context).height;

@@ -4,11 +4,11 @@ import '../service/navigation_service.dart';
 import 'colors.dart';
 import 'enums.dart';
 
-final style = Style.value;
+final style = _Style.value;
 
-class Style {
-  static Style get value => Style._();
-  Style._();
+class _Style {
+  static _Style get value => _Style._();
+  _Style._();
 
   final defaultBlur = ImageFilter.blur(sigmaX: 4, sigmaY: 4);
 
