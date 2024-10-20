@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../core/shared/enums.dart';
+import '../../../core/shared/local_storage.dart';
 import '../../../core/shared/strings.dart';
-import '../../../core/viewmodel/base_viewmodel.dart';
-import '../../account/viewmodel/account_viewmodel.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final BuildContext context;
-  final Role? role = provider<AccountViewModel>().user?.role;
+  Role? role;
 
-  HomeViewModel(this.context);
+  HomeViewModel(this.context) {
+    role = localStorage.user?.role;
+    _selectedTab = role == Role.admin ? 1 : 0;
+  }
 
-Map<String, Object> get navItem =>
-    navItems.values.elementAt(_selectedTab);
+  Map<String, Object> get navItem => navItems.values.elementAt(_selectedTab);
 
   Map<int, Map<String, Object>> get navItems => {
         if (role == Role.admin)
@@ -39,7 +40,7 @@ Map<String, Object> get navItem =>
   /// This setter updates the [_selectedTab] field and notifies listeners
   /// about the change.
   /// Getter for the selected tab index.
-  int _selectedTab = 0;
+  late int _selectedTab;
   int get selectedTab => _selectedTab;
   set selectedTab(int tab) => this
     .._selectedTab = tab

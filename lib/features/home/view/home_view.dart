@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/shared/dimens.dart';
@@ -6,6 +7,7 @@ import '../../../core/widget/backdrop.dart';
 import '../../../core/widget/badge_widget.dart';
 import '../../booking/view/bookings_view.dart';
 import '../../account/view/settings_view.dart';
+import '../../booking/view/new_booking_view.dart';
 import '../../booking/view/schedule_view.dart';
 import '../viewmodel/home_viewmodel.dart';
 
@@ -31,7 +33,7 @@ class HomeView extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: _NavBar(
-            key: ValueKey('bottom_nav_bar'),
+            key: ValueKey('nav_bar_key'),
           ),
         ),
       ),
@@ -57,6 +59,16 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: theme.textTheme.titleLarge?.copyWith(
         fontWeight: FontWeight.bold,
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () => showCupertinoModalPopup(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => const NewBookingView(),
+          ),
+        ),
+      ],
     );
   }
 }

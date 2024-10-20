@@ -1,51 +1,51 @@
 class Vehicle {
   final String uid;
-  final String? brand;
+  final String? make;
   final String? model;
   final int? year;
-  final String regPlate;
+  final String plate;
 
   const Vehicle({
     required this.uid,
-    this.brand,
+    this.make,
     this.model,
     this.year,
-    required this.regPlate,
+    required this.plate,
   });
 
   Vehicle copyWith({
     String? uid,
-    String? brand,
+    String? make,
     String? model,
     int? year,
-    String? regPlate,
+    String? plate,
   }) {
     return Vehicle(
       uid: uid ?? this.uid,
-      brand: brand ?? this.brand,
+      make: make ?? this.make,
       model: model ?? this.model,
       year: year ?? this.year,
-      regPlate: regPlate ?? this.regPlate,
+      plate: plate ?? this.plate,
     );
   }
 
   factory Vehicle.fromMap(Map<String, dynamic> map) {
     return Vehicle(
       uid: map['id'],
-      brand: map['brand'],
+      make: map['make'],
       model: map['model'],
       year: map['year'],
-      regPlate: map['registration_plate'],
+      plate: map['plate_no'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': uid,
-      'brand': brand,
+      'make': make,
       'model': model,
       'year': year,
-      'registration_plate': regPlate,
+      'plate_no': plate,
     };
   }
 

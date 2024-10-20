@@ -122,7 +122,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textStyle = widget.style ?? theme.textTheme.titleMedium;
+    final textStyle = widget.style ?? theme.textTheme.bodyMedium;
     return Padding(
       padding: widget.margin,
       child: Column(

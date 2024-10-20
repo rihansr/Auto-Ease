@@ -16,12 +16,12 @@ class AccountViewModel extends ChangeNotifier {
   set user(User? user) => {
         _user = user,
         notifyListeners(),
-        localStorage.user = user,
+        localStorage.user = _user,
       };
   User? get user => _user;
 
-  userinfo() {
-    firestoreService.invoke(
+  Future<void> userinfo() async {
+    await firestoreService.invoke(
       onExecute: (firestore) async =>
           firestore.collection('users').doc(authService.user?.uid).get(),
       onCompleted: (snapshot) => user = User.fromMap(snapshot.data()!),

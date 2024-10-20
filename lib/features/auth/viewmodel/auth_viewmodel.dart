@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/service/analytics_service.dart';
 import '../../../core/service/auth_service.dart';
@@ -93,7 +94,7 @@ class AuthViewModel extends BaseViewModel {
       ),
       onCompleted: (credentials) async {
         if (credentials.user == null) return;
-        await provider<AccountViewModel>().userinfo();
+        await context.read<AccountViewModel>().userinfo();
         analyticsService.logLogin();
         context.pushReplacementNamed(Routes.home);
       },
