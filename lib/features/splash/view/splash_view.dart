@@ -16,6 +16,8 @@ class SplashView extends StatelessWidget {
       model: SplashViewModel(context),
       onInit: (controller) => controller.init(),
       builder: (context, controller, child) => Scaffold(
+        appBar: AppBar(),
+        extendBodyBehindAppBar: true,
         body: Backdrop(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

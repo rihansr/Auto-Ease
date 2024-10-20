@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import '../../features/profile/viewmodel/account_viewmodel.dart';
+import '../../features/account/viewmodel/account_viewmodel.dart';
 
 List<SingleChildWidget> providers = [
   ...independentService,

@@ -8,7 +8,7 @@ import '../../../core/shared/enums.dart';
 import '../../../core/shared/local_storage.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/viewmodel/base_viewmodel.dart';
-import '../../profile/viewmodel/account_viewmodel.dart';
+import '../../account/viewmodel/account_viewmodel.dart';
 import '../model/user_model.dart';
 
 class AuthViewModel extends BaseViewModel {

@@ -21,6 +21,7 @@ ThemeData theming(ThemeMode mode) {
       brightness: mode == ThemeMode.light ? Brightness.light : Brightness.dark,
       primary: colorPalette.primary,
       onPrimary: colorPalette.onPrimary,
+      onErrorContainer: colorPalette.onPrimaryContainer,
       secondary: colorPalette.secondary,
       onSecondary: colorPalette.onSecondary,
       tertiary: colorPalette.tertiary,
@@ -151,24 +152,22 @@ ThemeData theming(ThemeMode mode) {
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: colorPalette.surface,
+      backgroundColor: Colors.transparent,
       elevation: 4,
       selectedIconTheme: IconThemeData(color: colorPalette.onPrimary, size: 24),
       unselectedIconTheme: IconThemeData(color: colorPalette.icon, size: 24),
       unselectedItemColor: colorPalette.paragraph,
       selectedItemColor: colorPalette.headline,
       showUnselectedLabels: true,
-      selectedLabelStyle: TextStyle(
+      selectedLabelStyle: const TextStyle(
         fontSize: 12,
-        height: 1.33,
-        fontWeight: FontWeight.w600,
-        color: colorPalette.paragraph,
-      ),
-      unselectedLabelStyle: TextStyle(
-        fontSize: 12,
-        height: 1.33,
+        height: 1.75,
         fontWeight: FontWeight.w500,
-        color: colorPalette.paragraph,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        fontSize: 12,
+        height: 1.75,
+        fontWeight: FontWeight.w400,
       ),
     ),
     textTheme: const TextTheme().copyWith(

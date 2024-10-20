@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 class ColorPalette {
   Color primary;
   Color onPrimary;
+  Color onPrimaryContainer;
   Color secondary;
   Color onSecondary;
   Color tertiary;
@@ -28,6 +29,7 @@ class ColorPalette {
   ColorPalette({
     required this.primary,
     required this.onPrimary,
+    required this.onPrimaryContainer,
     required this.secondary,
     required this.onSecondary,
     required this.tertiary,
@@ -53,6 +55,7 @@ class ColorPalette {
   factory ColorPalette.light() => ColorPalette(
         primary: const Color(0xFF0e63f4),
         onPrimary: const Color(0xFFFFFFFF),
+        onPrimaryContainer: const Color(0xFFE7EFFE),
         secondary: const Color(0xFF54c1fb),
         onSecondary: const Color(0xFF0D5ADE),
         tertiary: const Color(0xFFff5670),
@@ -78,6 +81,7 @@ class ColorPalette {
   factory ColorPalette.dark() => ColorPalette(
         primary: const Color(0xFF0e63f4),
         onPrimary: const Color(0xFFFFFFFF),
+        onPrimaryContainer: const Color(0xFF342E5E),
         secondary: const Color(0xFF54c1fb),
         onSecondary: const Color(0xFF0D5ADE),
         tertiary: const Color(0xFFff5670),
