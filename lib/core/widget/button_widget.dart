@@ -106,7 +106,7 @@ class Button<T> extends StatelessWidget {
             ),
             secondChild: SizedBox(
               key: const Key('loading_state'),
-              width: labelStyle.fontSize! * 2,
+              height: labelStyle.fontSize! * 1.5,
               child: CupertinoActivityIndicator(
                 color: labelStyle.color,
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../shared/local_storage.dart';
+import 'firebase_config.dart';
 
 enum _AppMode { debug, production }
 
@@ -25,6 +26,7 @@ class _AppConfig {
         DeviceOrientation.portraitDown,
       ]),
       localStorage.init(),
+      firebaseConfig.init(),
     ]);
   }
 

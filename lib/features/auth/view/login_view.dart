@@ -16,7 +16,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AuthViewBuilder(
-      controller: AuthViewModel.login(),
+      controller: AuthViewModel.login(context),
       title: string.of(context).login,
       builder: (context, controller) => [
         TextFieldWidget(

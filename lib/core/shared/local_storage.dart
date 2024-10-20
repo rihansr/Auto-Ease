@@ -32,6 +32,4 @@ class _LocalStorage {
 
   set user(User? user) =>
       _sharedPrefs.setString(_userInfoKey, user?.toJson() ?? '');
-
-  bool get isLoggedIn => user?.uid != null;
 }

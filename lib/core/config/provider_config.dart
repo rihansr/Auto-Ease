@@ -12,6 +12,6 @@ List<SingleChildWidget> independentService = [];
 
 List<SingleChildWidget> universalService = [
   ChangeNotifierProvider<AccountViewModel>(
-    create: (context) => AccountViewModel(context),
+    create: (context) => AccountViewModel(),
   ),
 ];

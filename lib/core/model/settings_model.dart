@@ -7,7 +7,7 @@ class Settings {
   final Language language;
 
   const Settings({
-    this.themeMode = ThemeMode.light,
+    this.themeMode = ThemeMode.system,
     this.language = Language.english,
   });
 

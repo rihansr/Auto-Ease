@@ -1,5 +1,10 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart' show ScaffoldMessenger;
 import '../shared/debug.dart';
+import '../shared/enums.dart';
+import '../shared/styles.dart';
+import 'navigation_service.dart';
 
 final firestoreService = FirestoreService.value;
 
@@ -9,14 +14,18 @@ class FirestoreService {
 
   final _instance = FirebaseFirestore.instance;
 
-  call(Future action, {Function()? onError}) async {
+  Future<void> invoke<R>({
+    required Future<R> Function(FirebaseFirestore firestore) onExecute,
+    Function(R)? onCompleted,
+    Function? onError,
+  }) async {
     try {
-      await action.onError((error, stackTrace) {
-        debug.print(error, tag: 'Firestore Exception');
-        onError?.call();
-      });
+      await onExecute(_instance).then(onCompleted ?? (_) {}, onError: onError);
     } catch (error) {
       debug.print(error, tag: 'Firestore Exception');
+      ScaffoldMessenger.of(navigator.context).showSnackBar(
+        style.snackbar(error.toString(), type: AlertType.error),
+      );
       onError?.call();
     }
   }
@@ -27,13 +36,12 @@ extension FirestoreServiceExtension
   set({
     required String id,
     required Map<String, dynamic> data,
-    Function()? callback,
   }) async =>
       doc(id).set(data).timeout(const Duration(seconds: 1)).onError(
         (error, stackTrace) {
           debug.print(error, tag: 'Add Exception');
         },
-      ).then((_) => callback?.call());
+      );
 
   update({
     required String id,
@@ -44,7 +52,7 @@ extension FirestoreServiceExtension
         (error, stackTrace) {
           debug.print(error, tag: 'Update Exception');
         },
-      ).then((_) => callback?.call());
+      );
 
   delete({
     required String id,
@@ -54,5 +62,5 @@ extension FirestoreServiceExtension
         (error, stackTrace) {
           debug.print(error, tag: 'Delete Exception');
         },
-      ).then((_) => callback?.call());
+      );
 }

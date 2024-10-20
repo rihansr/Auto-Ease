@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/view/login_view.dart';
 import '../../features/auth/view/register_view.dart';
-import '../../features/dashboard/view/dashboard_view.dart';
+import '../../features/home/view/home_view.dart';
 import '../../features/splash/view/splash_view.dart';
 import '../service/navigation_service.dart';
 import 'routes.dart';
@@ -11,7 +11,7 @@ final GoRouter routing = GoRouter(
   navigatorKey: navigator.navigatorKey,
   initialLocation: Routes.splash,
   routes: <RouteBase>[
-     GoRoute(
+    GoRoute(
       name: Routes.splash,
       path: Routes.splash,
       builder: (BuildContext context, GoRouterState state) {
@@ -33,10 +33,10 @@ final GoRouter routing = GoRouter(
       },
     ),
     GoRoute(
-      name: Routes.landing,
-      path: '/:uid',
+      name: Routes.home,
+      path: Routes.home,
       builder: (BuildContext context, GoRouterState state) {
-        return const DashboardView();
+        return const HomeView();
       },
     ),
   ],

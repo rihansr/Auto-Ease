@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/routing/routes.dart';
+import '../../../core/service/auth_service.dart';
 import '../../../core/shared/constants.dart';
-import '../../../core/shared/local_storage.dart';
 
 class SplashViewModel extends ChangeNotifier {
   final BuildContext context;
@@ -17,7 +17,7 @@ class SplashViewModel extends ChangeNotifier {
   }
 
   _navigateTo() => context.pushReplacementNamed(
-        localStorage.isLoggedIn ? Routes.landing : Routes.login,
+        authService.isLoggedIn ? Routes.home : Routes.login,
       );
 
   @override

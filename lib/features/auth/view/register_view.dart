@@ -1,6 +1,8 @@
+import 'package:autoease/core/shared/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
@@ -15,7 +17,7 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AuthViewBuilder(
-      controller: AuthViewModel.register(),
+      controller: AuthViewModel.register(context),
       title: string.of(context).register,
       builder: (context, controller) => [
         TextFieldWidget(
@@ -28,6 +30,7 @@ class RegisterView extends StatelessWidget {
           hintText: string.of(context).nameHint,
           title: string.of(context).name,
           keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
         ),
         TextFieldWidget(
           controller: controller.emailController,
@@ -49,24 +52,32 @@ class RegisterView extends StatelessWidget {
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
         ),
-        TextFieldWidget(
-          controller: controller.secondaryPasswordController,
-          autoValidate: controller.enabledAutoValidate,
-          validator: (value) => validator.validatePassword(
-            value,
-            field: string.of(context).password,
-            matchValue: controller.passwordController?.text,
-          ),
-          hintText: string.of(context).passwordHint,
-          title: string.of(context).confirmPassword,
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: true,
+        const SizedBox(height: 8),
+        Row(
+          children: [Role.admin, Role.mechanic].map(
+            (role) {
+              final selected = controller.role == role;
+              return Expanded(
+                child: RadioListTile<Role>(
+                  dense: true,
+                  contentPadding: const EdgeInsets.all(0),
+                  visualDensity: const VisualDensity(horizontal: -4),
+                  title: Text(role.name.capitalize),
+                  value: role,
+                  groupValue: controller.role,
+                  onChanged: (value) => controller.role = value!,
+                  selected: selected,
+                  activeColor: theme.colorScheme.primary,
+                ),
+              );
+            },
+          ).toList(),
         ),
         const SizedBox(height: 16),
         Button(
           label: string.of(context).signUp,
-          onPressed: () => controller.login(),
-          loading: controller.isLoading(key: 'login', orElse: false),
+          onPressed: () => controller.register(),
+          loading: controller.isLoading(key: 'register', orElse: false),
         ),
         const SizedBox(height: 8),
         Text.rich(
@@ -79,8 +90,7 @@ class RegisterView extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: theme.colorScheme.primary,
                 ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => context.pop(),
+                recognizer: TapGestureRecognizer()..onTap = () => context.pop(),
               ),
             ],
             style: theme.textTheme.labelMedium,
