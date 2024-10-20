@@ -13,6 +13,9 @@ class _Dimen {
   final double width = MediaQuery.sizeOf(navigator.context).width;
   final EdgeInsets padding = MediaQuery.of(navigator.context).padding;
 
+  final toolBarHeight = 88.0;
+  final navBarHeight = 72.0;
+
   double bottom(double value, [bool merge = true]) =>
       padding.bottom == 0 ? value : padding.bottom + (merge ? value : 0);
 }

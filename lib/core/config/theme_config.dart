@@ -153,9 +153,7 @@ ThemeData theming(ThemeMode mode) {
     bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.transparent,
-      elevation: 4,
-      selectedIconTheme: IconThemeData(color: colorPalette.onPrimary, size: 24),
-      unselectedIconTheme: IconThemeData(color: colorPalette.icon, size: 24),
+      elevation: 0,
       unselectedItemColor: colorPalette.paragraph,
       selectedItemColor: colorPalette.headline,
       showUnselectedLabels: true,
