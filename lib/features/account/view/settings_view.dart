@@ -25,6 +25,9 @@ class SettingsView extends StatelessWidget {
         _ThemeSection(
           key: ValueKey('theme_section'),
         ),
+        _LogoutSection(
+          key: ValueKey('logout_section'),
+        ),
       ],
     );
   }
@@ -116,6 +119,28 @@ class _ThemeSection extends StatelessWidget {
             ),
           )
           .toList(),
+    );
+  }
+}
+
+class _LogoutSection extends StatelessWidget {
+  const _LogoutSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final controller = context.read<AccountViewModel>();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+      child: TextButton(
+        onPressed: controller.logout,
+        child: Text(
+          string.of(context).logout,
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: theme.colorScheme.tertiary,
+          ),
+        ),
+      ),
     );
   }
 }

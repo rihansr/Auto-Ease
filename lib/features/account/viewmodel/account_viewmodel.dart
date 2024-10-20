@@ -5,6 +5,8 @@ import '../../../core/service/auth_service.dart';
 import '../../../core/service/firestore_service.dart';
 import '../../../core/service/navigation_service.dart';
 import '../../../core/shared/local_storage.dart';
+import '../../../core/shared/strings.dart';
+import '../../../core/widget/modal_bottomsheet.dart';
 import '../../auth/model/user_model.dart';
 
 class AccountViewModel extends ChangeNotifier {
@@ -26,9 +28,24 @@ class AccountViewModel extends ChangeNotifier {
     );
   }
 
-  logout() {
-    user = null;
-    authService.signOut();
-    navigator.context.pushReplacementNamed(Routes.login);
-  }
+  logout() => ModalBottomSheet.show(
+        navigator.context,
+        (context) => ModalBottomSheet(
+          title: Text(
+            string.of(context).logout,
+            textAlign: TextAlign.center,
+          ),
+          subtitle: Text(
+            string.of(context).wantToLogout,
+            textAlign: TextAlign.center,
+          ),
+          primaryButtonLabel: string.of(context).logout,
+          primaryButtonColor: Theme.of(context).colorScheme.tertiary,
+          onPrimaryButtonPressed: () {
+            user = null;
+            authService.signOut();
+            navigator.context.pushReplacementNamed(Routes.login);
+          },
+        ),
+      );
 }
