@@ -1,12 +1,16 @@
-import 'package:autoease/core/shared/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import '../../../core/routing/routes.dart';
+import '../../../core/service/analytics_service.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
+import '../../../core/shared/utils.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/text_field_widget.dart';
+import '../../account/viewmodel/account_viewmodel.dart';
 import '../viewmodel/auth_viewmodel.dart';
 import '../widget/auth_view_builder.dart';
 
@@ -41,6 +45,12 @@ class RegisterView extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
         ),
         TextFieldWidget(
+          controller: controller.phoneController,
+          hintText: string.of(context).phoneHint,
+          title: string.of(context).phone,
+          keyboardType: TextInputType.phone,
+        ),
+        TextFieldWidget(
           controller: controller.passwordController,
           autoValidate: controller.enabledAutoValidate,
           validator: (value) => validator.validatePassword(
@@ -65,7 +75,7 @@ class RegisterView extends StatelessWidget {
                   title: Text(role.name.capitalize),
                   value: role,
                   groupValue: controller.role,
-                  onChanged: (value) => controller.role = value!,
+                  onChanged: (value) => controller.userRole = value!,
                   selected: selected,
                   activeColor: theme.colorScheme.primary,
                 ),
@@ -76,8 +86,21 @@ class RegisterView extends StatelessWidget {
         const SizedBox(height: 16),
         Button(
           label: string.of(context).signUp,
-          onPressed: () => controller.register(),
-          loading: controller.isLoading(key: 'register', orElse: false),
+          onPressed: () => controller.signUp(
+            onSuccess: (user) async {
+              await controller.saveUser(
+                uid: user.uid,
+                onSuccess: (user) {
+                  context.read<AccountViewModel>().user = user;
+                  analyticsService.logUser(user.uid);
+                  analyticsService.logRegister();
+                },
+              );
+              context.pop();
+              context.pushReplacementNamed(Routes.home);
+            },
+          ),
+          loading: controller.isLoading(key: 'signing_up', orElse: false),
         ),
         const SizedBox(height: 8),
         Text.rich(

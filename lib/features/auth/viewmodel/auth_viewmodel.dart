@@ -1,15 +1,11 @@
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import '../../../core/routing/routes.dart';
-import '../../../core/service/analytics_service.dart';
 import '../../../core/service/auth_service.dart';
 import '../../../core/service/firestore_service.dart';
 import '../../../core/shared/enums.dart';
-import '../../../core/shared/local_storage.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/viewmodel/base_viewmodel.dart';
-import '../../account/viewmodel/account_viewmodel.dart';
 import '../model/user_model.dart';
 
 class AuthViewModel extends BaseViewModel {
@@ -18,6 +14,7 @@ class AuthViewModel extends BaseViewModel {
   User? user;
   TextEditingController? nameController;
   TextEditingController? emailController;
+  TextEditingController? phoneController;
   TextEditingController? passwordController;
 
   AuthViewModel.login(this.context)
@@ -29,24 +26,26 @@ class AuthViewModel extends BaseViewModel {
       : formKey = GlobalKey<FormState>(),
         nameController = TextEditingController(),
         emailController = TextEditingController(),
+        phoneController = TextEditingController(),
         passwordController = TextEditingController();
 
-  AuthViewModel.update(this.context) : formKey = GlobalKey<FormState>() {
-    user = localStorage.user;
-    nameController = TextEditingController(text: user?.name);
-    emailController = TextEditingController(text: user?.email);
-    _role = user?.role ?? Role.admin;
-  }
+  AuthViewModel.update(this.context, this.user)
+      : formKey = GlobalKey<FormState>(),
+        nameController = TextEditingController(text: user?.name),
+        emailController = TextEditingController(text: user?.email),
+        phoneController = TextEditingController(text: user?.phone),
+        role = user?.role ?? Role.admin;
 
-  Role _role = Role.admin;
-  Role get role => _role;
-  set role(Role role) => this
-    .._role = role
+  Role role = Role.admin;
+  set userRole(Role role) => this
+    ..role = role
     ..notifyListeners();
 
-  Future<void> register() async {
+  Future<void> signUp({
+    required FutureOr Function(auth.User) onSuccess,
+  }) async {
     if (!validate(formKey)) return;
-    setBusy(true, key: 'register');
+    setBusy(true, key: 'signing_up');
 
     await authService.invoke(
       onExecute: (auth) async => auth.createUserWithEmailAndPassword(
@@ -55,38 +54,40 @@ class AuthViewModel extends BaseViewModel {
       ),
       onCompleted: (credentials) async {
         if (credentials.user == null) return;
-        await saveUser(credentials.user!.uid);
-        context.pop();
-        context.pushReplacementNamed(Routes.home);
+        await onSuccess(credentials.user!);
       },
     );
 
-    setBusy(false, key: 'register');
+    setBusy(false, key: 'signing_up');
   }
 
-  Future<void> saveUser(String uid) async {
+  Future<void> saveUser({
+    required String uid,
+    required FutureOr Function(User) onSuccess,
+  }) async {
     final user = User(
       uid: uid,
       name: validator.string(nameController?.text, orElse: '')!,
+      phone: validator.string(phoneController?.text, orElse: '')!,
       email: validator.string(emailController?.text, orElse: '')!,
-      role: _role,
+      role: role,
     );
     firestoreService.invoke(
-      onExecute: (firestore) async => firestore.collection('users').set(
+      onExecute: (firestore) async => firestore.collection(role.table).set(
             id: uid,
             data: user.toMap(),
           ),
-      onCompleted: (_) {
-        provider<AccountViewModel>().user = user;
-        analyticsService.logUser(uid);
-        analyticsService.logRegister();
+      onCompleted: (_) async {
+        await onSuccess.call(user);
       },
     );
   }
 
-  Future<bool> login() async {
-    if (!validate(formKey)) return false;
-    setBusy(true, key: 'login');
+  Future<void> signIn({
+    required FutureOr Function(auth.User) onSuccess,
+  }) async {
+    if (!validate(formKey)) return;
+    setBusy(true, key: 'signing_in');
     await authService.invoke(
       onExecute: (auth) async => auth.signInWithEmailAndPassword(
         email: validator.string(emailController?.text, orElse: '')!,
@@ -94,19 +95,38 @@ class AuthViewModel extends BaseViewModel {
       ),
       onCompleted: (credentials) async {
         if (credentials.user == null) return;
-        await context.read<AccountViewModel>().userinfo();
-        analyticsService.logLogin();
-        context.pushReplacementNamed(Routes.home);
+        await onSuccess(credentials.user!);
       },
     );
-    setBusy(false, key: 'login');
-    return true;
+    setBusy(false, key: 'signing_in');
+  }
+
+  Future<void> updateAccount({
+    required FutureOr Function(User) onSuccess,
+  }) async {
+    if (!validate(formKey) || this.user == null) return;
+    final user = this.user!.copyWith(
+          name: validator.string(nameController?.text, orElse: '')!,
+          phone: validator.string(phoneController?.text, orElse: '')!,
+          email: validator.string(emailController?.text, orElse: '')!,
+          role: role,
+        );
+    firestoreService.invoke(
+      onExecute: (firestore) async => firestore.collection(role.table).update(
+            id: user.uid,
+            data: user.toMap(),
+          ),
+      onCompleted: (_) async {
+        await onSuccess.call(user);
+      },
+    );
   }
 
   @override
   void dispose() {
     nameController?.dispose();
     emailController?.dispose();
+    phoneController?.dispose();
     passwordController?.dispose();
     super.dispose();
   }

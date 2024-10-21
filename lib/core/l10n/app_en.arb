@@ -32,6 +32,7 @@
   "@_HINTS": "<-----------------HINTS----------------->",
   "nameHint": "John Doe",
   "emailHint": "johndoe@example.com",
+  "phoneHint": "+64 ••• ••• •••",
   "passwordHint": "••••••••",
   "@_MESSAGES": "<-----------------MESSAGES----------------->",
   "someErrorOccured": "Some Error Occured!",

@@ -1,11 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../core/routing/routes.dart';
+import '../../../core/service/analytics_service.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/text_field_widget.dart';
+import '../../account/viewmodel/account_viewmodel.dart';
 import '../viewmodel/auth_viewmodel.dart';
 import '../widget/auth_view_builder.dart';
 
@@ -42,8 +45,14 @@ class LoginView extends StatelessWidget {
         const SizedBox(height: 16),
         Button(
           label: string.of(context).signIn,
-          onPressed: () => controller.login(),
-          loading: controller.isLoading(key: 'login', orElse: false),
+          onPressed: () => controller.signIn(
+            onSuccess: (user) async {
+              await context.read<AccountViewModel>().userinfo();
+              analyticsService.logLogin();
+              context.pushReplacementNamed(Routes.home);
+            },
+          ),
+          loading: controller.isLoading(key: 'signing_in', orElse: false),
         ),
         const SizedBox(height: 8),
         Text.rich(

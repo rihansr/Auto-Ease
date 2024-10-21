@@ -3,6 +3,7 @@ import 'package:autoease/core/shared/enums.dart';
 import 'package:autoease/core/shared/strings.dart';
 import 'package:autoease/core/shared/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart' show ScaffoldMessenger;
 import '../shared/debug.dart';
 import 'navigation_service.dart';
@@ -22,10 +23,20 @@ class _AuthService {
   Future<void> invoke<R>({
     required Future<R> Function(FirebaseAuth auth) onExecute,
     required Function(R)? onCompleted,
+    bool isolatedAuth = false,
     Function? onError,
   }) async {
     try {
-      await onExecute(_instance).then(onCompleted ?? (_) {}, onError: onError);
+      FirebaseAuth? tempAuth;
+      if (isolatedAuth) {
+        final annonymous = await Firebase.initializeApp(
+          name: "annonymous",
+          options: Firebase.app().options,
+        );
+        tempAuth = FirebaseAuth.instanceFor(app: annonymous);
+      }
+      await onExecute(tempAuth ?? _instance)
+          .then(onCompleted ?? (_) {}, onError: onError);
     } on FirebaseAuthException catch (error) {
       debug.print(error.message, tag: 'Auth Exception');
       ScaffoldMessenger.of(navigator.context).showSnackBar(

@@ -2,7 +2,21 @@ import 'dart:ui';
 
 enum AlertType { success, error, info }
 
-enum Role { admin, mechanic, customer }
+enum Role {
+  admin,
+  mechanic,
+  customer;
+
+  String get table {
+    switch (this) {
+      case Role.admin:
+      case Role.mechanic:
+        return 'users';
+      case Role.customer:
+        return 'customers';
+    }
+  }
+}
 
 enum BookingStatus { pending, accepted, completed, cancelled }
 
