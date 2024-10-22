@@ -19,7 +19,7 @@ class CarInfoPage extends StatelessWidget {
       title: string.of(context).carInfo,
       action: Button(
         label: string.of(context).next,
-        onPressed: () => controller.nextPage(),
+        onPressed: controller.nextPage,
       ),
       children: [
         TextFieldWidget(

@@ -1,23 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Service {
-  final String title;
-  final bool isCompleted;
+  final String uid;
+  final String name;
+  final bool? isCompleted;
+  final num price;
   final DateTime? completedAt;
 
   const Service({
-    required this.title,
-    this.isCompleted = false,
-     this.completedAt,
+    required this.uid,
+    required this.name,
+    this.price = 0,
+    this.isCompleted,
+    this.completedAt,
   });
 
   Service copyWith({
-    String? title,
+    String? name,
+    num? price,
     bool? isCompleted,
     DateTime? completedAt,
   }) {
     return Service(
-      title: title ?? this.title,
+      uid: uid,
+      name: name ?? this.name,
+      price: price ?? this.price,
       isCompleted: isCompleted ?? this.isCompleted,
       completedAt: completedAt ?? this.completedAt,
     );
@@ -25,17 +32,33 @@ class Service {
 
   factory Service.fromMap(Map<String, dynamic> map) {
     return Service(
-      title: map['title'],
-      isCompleted: map['is_completed'] ?? false,
+      uid: map['uid'],
+      name: map['name'],
+      price: map['price'] ?? 0,
+      isCompleted: map['is_completed'],
       completedAt: (map['completed_at'] as Timestamp?)?.toDate(),
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
-      'is_completed': isCompleted,
-      'completed_at': completedAt,
+      'uid': uid,
+      'name': name,
+      'price': price,
+      if(isCompleted != null) 'is_completed': isCompleted,
+      if(completedAt != null) 'completed_at': completedAt,
     };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Service && other.uid == uid;
+  }
+
+  @override
+  int get hashCode {
+    return uid.hashCode;
   }
 }

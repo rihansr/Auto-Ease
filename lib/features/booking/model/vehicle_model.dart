@@ -2,7 +2,7 @@ class Vehicle {
   final String uid;
   final String? make;
   final String? model;
-  final int? year;
+  final String? year;
   final String plate;
 
   const Vehicle({
@@ -17,7 +17,7 @@ class Vehicle {
     String? uid,
     String? make,
     String? model,
-    int? year,
+    String? year,
     String? plate,
   }) {
     return Vehicle(

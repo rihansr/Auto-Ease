@@ -34,7 +34,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      'uid': uid,
+      if (uid != null) 'uid': uid,
       'name': name,
       'email': email,
       'phone': phone,
@@ -44,9 +44,9 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      uid: map['uid'] ?? '',
+      uid: map['uid'],
       name: map['name'],
-      email: map['email'] ?? '',
+      email: map['email'],
       phone: map['phone'],
       role: Role.values.byName(map["role"]),
     );

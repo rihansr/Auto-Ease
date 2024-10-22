@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/shared/dimens.dart';
 import '../../../core/widget/backdrop.dart';
 import '../../../core/widget/base_widget.dart';
 import '../component/booking_info_page.dart';
@@ -29,16 +28,15 @@ class NewBookingView extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => controller.previousPage(),
+            onPressed: controller.previousPage,
           ),
         ),
         extendBodyBehindAppBar: true,
         extendBody: true,
         body: Backdrop(
           child: SafeArea(
-            bottom: false,
             child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
+              //physics: const NeverScrollableScrollPhysics(),
               controller: controller.pageController,
               children: const [
                 BookingInfoPage(
@@ -60,16 +58,11 @@ class NewBookingView extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            PageIndicator(
-              controller: controller.pageController,
-              count: 5,
-            ),
-            SizedBox(height: dimen.bottom(24)),
-          ],
+        floatingActionButton: PageIndicator(
+          controller: controller.pageController,
+          count: 5,
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }

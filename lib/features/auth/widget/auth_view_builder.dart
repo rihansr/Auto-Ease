@@ -37,37 +37,35 @@ class AuthViewBuilder extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Backdrop(
           child: SafeArea(
-            child: Center(
-              child: CardBox(
-                children: [
-                  SvgPicture.asset(
-                    width: dimen.width / 2.5,
-                    drawable.splashLogo,
-                    fit: BoxFit.scaleDown,
+            child: CardBox(
+              children: [
+                SvgPicture.asset(
+                  width: dimen.width / 2.5,
+                  drawable.splashLogo,
+                  fit: BoxFit.scaleDown,
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  title,
+                  style: theme.textTheme.headlineSmall!.copyWith(
+                    fontWeight: FontWeight.w700,
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    title,
-                    style: theme.textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  string.of(context).enterYourDetails,
+                  style: theme.textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+                Form(
+                  key: controller.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: builder(context, controller),
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    string.of(context).enterYourDetails,
-                    style: theme.textTheme.bodyLarge,
-                    overflow: TextOverflow.visible,
-                    textAlign: TextAlign.center,
-                  ),
-                  Form(
-                    key: controller.formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: builder(context, controller),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

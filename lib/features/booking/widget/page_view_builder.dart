@@ -19,27 +19,30 @@ class PageViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return CardBox(
-      margin: EdgeInsets.fromLTRB(16, 16, 16, dimen.bottom(16)),
-      children: [
-        Text(
-          title,
-          style: theme.textTheme.headlineSmall!.copyWith(
-            fontWeight: FontWeight.w700,
+    return Align(
+      alignment: Alignment.topCenter,
+      child: CardBox(
+        margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(40)),
+        children: [
+          Text(
+            title,
+            style: theme.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        const SizedBox(height: 24),
-        Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: children,
+          const SizedBox(height: 24),
+          Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: children,
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        action,
-      ],
+          const SizedBox(height: 16),
+          action,
+        ],
+      ),
     );
   }
 }

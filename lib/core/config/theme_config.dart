@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../shared/colors.dart';
 import '../shared/constants.dart';
-import '../shared/dimens.dart';
 
 ThemeData theming(ThemeMode mode) {
   ColorPalette colorPalette;
@@ -106,12 +105,12 @@ ThemeData theming(ThemeMode mode) {
             : Colors.transparent,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(2),
+        borderRadius: BorderRadius.circular(4),
       ),
       side: WidgetStateBorderSide.resolveWith(
         (states) => states.contains(WidgetState.selected)
-            ? BorderSide(color: colorPalette.primary, strokeAlign: 4, width: 1)
-            : BorderSide(color: colorPalette.outline, strokeAlign: 4, width: 1),
+            ? BorderSide(color: colorPalette.primary, strokeAlign: 1, width: 1)
+            : BorderSide(color: colorPalette.outline, strokeAlign: 1, width: 1),
       ),
     ),
     cardTheme: const CardTheme().copyWith(

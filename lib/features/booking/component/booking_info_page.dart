@@ -21,7 +21,7 @@ class BookingInfoPage extends StatelessWidget {
       title: string.of(context).bookingInfo,
       action: Button(
         label: string.of(context).next,
-        onPressed: () => controller.nextPage(),
+        onPressed: controller.nextPage,
       ),
       children: [
         TextFieldWidget(

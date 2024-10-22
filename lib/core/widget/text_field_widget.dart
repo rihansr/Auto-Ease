@@ -91,23 +91,11 @@ class TextFieldWidget extends StatefulWidget {
 
 class _TextFieldWidgetState extends State<TextFieldWidget> {
   late bool isPassword;
-  FocusNode focus = FocusNode();
 
   @override
   void initState() {
     isPassword = widget.obscureText;
-
     super.initState();
-    focus.addListener(_onFocusChange);
-  }
-
-  void _onFocusChange() => widget.onFocusChange?.call(focus.hasFocus);
-
-  @override
-  void dispose() {
-    super.dispose();
-    focus.removeListener(_onFocusChange);
-    focus.dispose();
   }
 
   InputBorder inputBorder(Color color) {
@@ -158,7 +146,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
             maxLines: widget.maxLines ?? 1,
-            focusNode: widget.focusNode ?? focus,
+            focusNode: widget.focusNode,
             onTap: widget.onTap,
             onFieldSubmitted: widget.onFieldSubmitted,
             onChanged: widget.onChanged,
@@ -171,7 +159,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             style: textStyle,
             enableInteractiveSelection: widget.enableInteractiveSelection,
             enabled: widget.enabled,
-            onTapOutside: (_) => focus.unfocus(),
+            onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
             decoration: InputDecoration(
               enabled: widget.enabled,
               filled: widget.fillColor != null,

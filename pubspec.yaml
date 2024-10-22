@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -25,7 +25,8 @@ dependencies:
   syncfusion_flutter_calendar: ^27.1.53
   timelines: ^0.1.0
   skeletonizer: ^1.4.2
-
+  flutter_typeahead: ^4.8.0
+  
   # Routing
   go_router: ^14.3.0
 

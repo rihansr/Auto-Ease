@@ -71,6 +71,8 @@ class BaseViewModel extends ChangeNotifier {
     }
   }
 
+  void get notify => notifyListeners();
+
   @override
   void dispose() {
     _busy = false;
