@@ -39,7 +39,6 @@ ThemeData theming(ThemeMode mode) {
     canvasColor: colorPalette.surface,
     primaryColor: colorPalette.primary,
     dividerColor: colorPalette.divider,
-    brightness: mode == ThemeMode.light ? Brightness.light : Brightness.dark,
     shadowColor: colorPalette.shadow,
     scaffoldBackgroundColor: colorPalette.scaffold,
     cardColor: colorPalette.card,
@@ -50,7 +49,6 @@ ThemeData theming(ThemeMode mode) {
       size: 24,
     ),
     appBarTheme: const AppBarTheme().copyWith(
-      toolbarHeight: 88.0,
       color: Colors.transparent,
       shadowColor: colorPalette.shadow,
       foregroundColor: colorPalette.icon,

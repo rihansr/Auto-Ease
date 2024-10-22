@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/config/app_settings.dart';
+import '../../../core/shared/dimens.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/shared/utils.dart';
@@ -13,20 +14,33 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      children: const [
-        _UserInformationSection(
-          key: ValueKey('user_info_section'),
+    final theme = Theme.of(context);
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          centerTitle: false,
+          title: Text(string.of(context).settings),
+          toolbarHeight: dimen.toolBarHeight,
+          titleTextStyle: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+          pinned: true,
         ),
-        _LanguageSection(
-          key: ValueKey('language_section'),
-        ),
-        _ThemeSection(
-          key: ValueKey('theme_section'),
-        ),
-        _LogoutSection(
-          key: ValueKey('logout_section'),
+        const SliverList(
+          delegate: SliverChildListDelegate.fixed([
+            _UserInformationSection(
+              key: ValueKey('user_info_section'),
+            ),
+            _LanguageSection(
+              key: ValueKey('language_section'),
+            ),
+            _ThemeSection(
+              key: ValueKey('theme_section'),
+            ),
+            _LogoutSection(
+              key: ValueKey('logout_section'),
+            ),
+          ]),
         ),
       ],
     );

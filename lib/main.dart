@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
           SystemChrome.setSystemUIOverlayStyle(
             SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
-              statusBarIconBrightness: settings.themeMode == ThemeMode.dark
-                  ? Brightness.light
-                  : Brightness.dark,
+              statusBarIconBrightness: settings.themeMode == ThemeMode.light
+                  ? Brightness.dark
+                  : Brightness.light,
             ),
           );
           return MaterialApp.router(

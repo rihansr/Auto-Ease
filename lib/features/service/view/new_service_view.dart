@@ -46,7 +46,6 @@ class NewServiceView extends StatelessWidget {
                     autoValidate: controller.enabledAutoValidate,
                     validator: (value) => validator.validateField(value),
                     keyboardType: TextInputType.text,
-                    textCapitalization: TextCapitalization.words,
                   ),
                   TextFieldWidget(
                     controller: controller.priceController,

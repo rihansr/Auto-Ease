@@ -75,9 +75,9 @@ class BookingViewModel extends BaseViewModel {
   }
 
   init() {
-    fetchCustomers();
-    fetchMechanics();
-    fetchServices();
+    _fetchCustomers();
+    _fetchMechanics();
+    _fetchServices();
   }
 
   // Customer Info
@@ -119,7 +119,7 @@ class BookingViewModel extends BaseViewModel {
   }
 
   List<User> customers = [];
-  Future<void> fetchCustomers() async {
+  Future<void> _fetchCustomers() async {
     firestoreService.invoke(
       onExecute: (firestore) => firestore.collection(Role.customer.table).get(),
       onCompleted: (snapshot) {
@@ -201,7 +201,7 @@ class BookingViewModel extends BaseViewModel {
   }
 
   List<User> mechanics = [];
-  Future<void> fetchMechanics() async {
+  Future<void> _fetchMechanics() async {
     firestoreService.invoke(
       onExecute: (firestore) => firestore
           .collection(Role.mechanic.table)
@@ -223,7 +223,7 @@ class BookingViewModel extends BaseViewModel {
     ..notifyListeners();
 
   List<Service> services = [];
-  Future<void> fetchServices() async {
+  Future<void> _fetchServices() async {
     setBusy(true, key: 'fetching_services');
     await firestoreService.invoke(
       onExecute: (firestore) => firestore.collection('services').get(),

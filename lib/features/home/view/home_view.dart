@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/shared/dimens.dart';
@@ -7,7 +6,6 @@ import '../../../core/widget/backdrop.dart';
 import '../../../core/widget/badge_widget.dart';
 import '../../booking/view/bookings_view.dart';
 import '../../account/view/settings_view.dart';
-import '../../booking/view/new_booking_view.dart';
 import '../../booking/view/schedule_view.dart';
 import '../viewmodel/home_viewmodel.dart';
 
@@ -20,9 +18,6 @@ class HomeView extends StatelessWidget {
       value: HomeViewModel(context),
       child: Consumer<HomeViewModel>(
         builder: (context, controller, _) => const Scaffold(
-          appBar: _AppBar(
-            key: ValueKey('app_bar_key'),
-          ),
           extendBodyBehindAppBar: true,
           extendBody: true,
           body: Backdrop(
@@ -37,38 +32,6 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
-
-  @override
-  Size get preferredSize => Size.fromHeight(dimen.toolBarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final controller = context.watch<HomeViewModel>();
-    return AppBar(
-      centerTitle: false,
-      title: Text(
-        controller.navItem['label'] as String,
-      ),
-      titleTextStyle: theme.textTheme.titleLarge?.copyWith(
-        fontWeight: FontWeight.bold,
-      ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: () => showCupertinoModalPopup(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => const NewBookingView(),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -10,7 +10,7 @@ class HomeViewModel extends ChangeNotifier {
 
   HomeViewModel(this.context) {
     role = localStorage.user?.role;
-    _selectedTab = role == Role.admin ? 1 : 0;
+    _selectedTab = role == Role.admin ? 0 : 0;
   }
 
   Map<String, Object> get navItem => navItems.values.elementAt(_selectedTab);
