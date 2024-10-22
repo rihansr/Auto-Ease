@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../../../core/service/navigation_service.dart';
 import '../../../core/shared/dimens.dart';
 import '../../../core/shared/strings.dart';
 
 showCustomDateTimePicker({
   BuildContext? context,
-  DateTime? initialDateTime,
+  DateTime? minimumDate,
+  DateTime? initialDate,
+  DateTime? maximumDate,
   CupertinoDatePickerMode? mode,
   Text? title,
   Function(DateTime)? onChanged,
@@ -18,7 +19,9 @@ showCustomDateTimePicker({
     builder: (_) {
       return _DateRangePicker(
         key: const Key('date_time_picker_key'),
-        dateTime: initialDateTime,
+        minimumDate: minimumDate,
+        initialDate: initialDate,
+        maximumDate: maximumDate,
         mode: mode ?? CupertinoDatePickerMode.dateAndTime,
         title: title,
         onChanged: onChanged,
@@ -30,7 +33,9 @@ showCustomDateTimePicker({
 
 // ignore: must_be_immutable
 class _DateRangePicker extends StatelessWidget {
-  final DateTime? dateTime;
+  final DateTime? minimumDate;
+  final DateTime? initialDate;
+  final DateTime? maximumDate;
   final CupertinoDatePickerMode mode;
   final Text? title;
   final Function(DateTime)? onChanged;
@@ -39,12 +44,14 @@ class _DateRangePicker extends StatelessWidget {
 
   _DateRangePicker({
     super.key,
-    this.dateTime,
+    this.initialDate,
+    this.minimumDate,
+    this.maximumDate,
     this.mode = CupertinoDatePickerMode.dateAndTime,
     this.title,
     this.onChanged,
     this.onSelected,
-  }) : _tempDateTime = dateTime;
+  }) : _tempDateTime = initialDate;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +89,9 @@ class _DateRangePicker extends StatelessWidget {
           child: CupertinoDatePicker(
             key: const Key('date_range_picker_from_key'),
             mode: mode,
-            initialDateTime: dateTime,
-            maximumDate: DateTime.now().add(const Duration(days: 90)),
+            minimumDate: minimumDate,
+            initialDateTime: initialDate,
+            maximumDate: maximumDate,
             onDateTimeChanged: (DateTime value) {
               _tempDateTime = value;
               onChanged?.call(value);

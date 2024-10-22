@@ -14,6 +14,8 @@ class FirestoreService {
 
   final _instance = FirebaseFirestore.instance;
 
+  String get uniqueId => _instance.collection('unique').doc().id;
+
   Future<void> invoke<R>({
     required Future<R> Function(FirebaseFirestore firestore) onExecute,
     Function(R)? onCompleted,

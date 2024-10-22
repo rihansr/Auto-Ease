@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../shared/colors.dart';
 import '../shared/constants.dart';
+import '../shared/dimens.dart';
 
 ThemeData theming(ThemeMode mode) {
   ColorPalette colorPalette;
@@ -50,6 +51,7 @@ ThemeData theming(ThemeMode mode) {
       size: 24,
     ),
     appBarTheme: const AppBarTheme().copyWith(
+      toolbarHeight: 88.0,
       color: Colors.transparent,
       shadowColor: colorPalette.shadow,
       foregroundColor: colorPalette.icon,
@@ -64,6 +66,19 @@ ThemeData theming(ThemeMode mode) {
         height: 1.5,
         letterSpacing: 0.15,
         color: colorPalette.headline,
+      ),
+    ),
+    tabBarTheme: const TabBarTheme().copyWith(
+      labelColor: colorPalette.headline,
+      unselectedLabelColor: colorPalette.paragraph,
+      indicatorSize: TabBarIndicatorSize.tab,
+      labelStyle: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
       ),
     ),
     switchTheme: SwitchThemeData(
@@ -83,7 +98,7 @@ ThemeData theming(ThemeMode mode) {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+      visualDensity: const VisualDensity(horizontal: -4),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (Set<WidgetState> states) => states.contains(WidgetState.selected)
@@ -91,20 +106,12 @@ ThemeData theming(ThemeMode mode) {
             : Colors.transparent,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(2),
       ),
       side: WidgetStateBorderSide.resolveWith(
         (states) => states.contains(WidgetState.selected)
-            ? BorderSide(
-                color: colorPalette.primary,
-                strokeAlign: 0,
-                width: 5,
-              )
-            : BorderSide(
-                color: colorPalette.outline,
-                strokeAlign: 4,
-                width: 1,
-              ),
+            ? BorderSide(color: colorPalette.primary, strokeAlign: 4, width: 1)
+            : BorderSide(color: colorPalette.outline, strokeAlign: 4, width: 1),
       ),
     ),
     cardTheme: const CardTheme().copyWith(

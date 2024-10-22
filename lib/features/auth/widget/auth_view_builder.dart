@@ -5,6 +5,7 @@ import '../../../core/shared/drawables.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/widget/backdrop.dart';
 import '../../../core/widget/base_widget.dart';
+import '../../../core/widget/card_box_widget.dart';
 import '../viewmodel/auth_viewmodel.dart';
 
 class AuthViewBuilder extends StatelessWidget {
@@ -37,45 +38,35 @@ class AuthViewBuilder extends StatelessWidget {
         body: Backdrop(
           child: SafeArea(
             child: Center(
-              child: SingleChildScrollView(
-                child: Card(
-                  margin: const EdgeInsets.all(16),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          width: dimen.width / 2.5,
-                          drawable.splashLogo,
-                          fit: BoxFit.scaleDown,
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          title,
-                          style: theme.textTheme.headlineSmall!.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          string.of(context).enterYourDetails,
-                          style: theme.textTheme.bodyLarge,
-                          overflow: TextOverflow.visible,
-                          textAlign: TextAlign.center,
-                        ),
-                        Form(
-                          key: controller.formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: builder(context, controller),
-                          ),
-                        ),
-                      ],
+              child: CardBox(
+                children: [
+                  SvgPicture.asset(
+                    width: dimen.width / 2.5,
+                    drawable.splashLogo,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    title,
+                    style: theme.textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  Text(
+                    string.of(context).enterYourDetails,
+                    style: theme.textTheme.bodyLarge,
+                    overflow: TextOverflow.visible,
+                    textAlign: TextAlign.center,
+                  ),
+                  Form(
+                    key: controller.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: builder(context, controller),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

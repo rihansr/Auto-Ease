@@ -2,15 +2,15 @@ import 'dart:convert';
 import '../../../core/shared/enums.dart';
 
 class User {
-  final String uid;
+  final String? uid;
   final String? name;
-  final String email;
+  final String? email;
   final String? phone;
   final Role role;
 
   const User({
-    required this.uid,
-    required this.email,
+    this.uid,
+    this.email,
     this.name,
     this.phone,
     required this.role,

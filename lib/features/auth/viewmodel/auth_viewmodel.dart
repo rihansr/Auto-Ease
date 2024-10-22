@@ -42,12 +42,14 @@ class AuthViewModel extends BaseViewModel {
     ..notifyListeners();
 
   Future<void> signUp({
+    bool isolatedAuth = false,
     required FutureOr Function(auth.User) onSuccess,
   }) async {
     if (!validate(formKey)) return;
     setBusy(true, key: 'signing_up');
 
     await authService.invoke(
+      isolatedAuth: isolatedAuth,
       onExecute: (auth) async => auth.createUserWithEmailAndPassword(
         email: validator.string(emailController?.text, orElse: '')!,
         password: validator.string(passwordController?.text, orElse: '')!,
@@ -62,9 +64,14 @@ class AuthViewModel extends BaseViewModel {
   }
 
   Future<void> saveUser({
-    required String uid,
+    String? uid,
     required FutureOr Function(User) onSuccess,
   }) async {
+    if (!validate(formKey)) return;
+
+    setBusy(true, key: 'saving_user');
+
+    uid ??= firestoreService.uniqueId;
     final user = User(
       uid: uid,
       name: validator.string(nameController?.text, orElse: '')!,
@@ -74,21 +81,24 @@ class AuthViewModel extends BaseViewModel {
     );
     firestoreService.invoke(
       onExecute: (firestore) async => firestore.collection(role.table).set(
-            id: uid,
+            id: uid!,
             data: user.toMap(),
           ),
       onCompleted: (_) async {
         await onSuccess.call(user);
       },
     );
+    setBusy(false, key: 'saving_user');
   }
 
   Future<void> signIn({
+    bool isolatedAuth = false,
     required FutureOr Function(auth.User) onSuccess,
   }) async {
     if (!validate(formKey)) return;
     setBusy(true, key: 'signing_in');
     await authService.invoke(
+      isolatedAuth: isolatedAuth,
       onExecute: (auth) async => auth.signInWithEmailAndPassword(
         email: validator.string(emailController?.text, orElse: '')!,
         password: validator.string(passwordController?.text, orElse: '')!,
@@ -105,6 +115,9 @@ class AuthViewModel extends BaseViewModel {
     required FutureOr Function(User) onSuccess,
   }) async {
     if (!validate(formKey) || this.user == null) return;
+
+    setBusy(true, key: 'updating_account');
+
     final user = this.user!.copyWith(
           name: validator.string(nameController?.text, orElse: '')!,
           phone: validator.string(phoneController?.text, orElse: '')!,
@@ -113,13 +126,15 @@ class AuthViewModel extends BaseViewModel {
         );
     firestoreService.invoke(
       onExecute: (firestore) async => firestore.collection(role.table).update(
-            id: user.uid,
+            id: user.uid!,
             data: user.toMap(),
           ),
       onCompleted: (_) async {
         await onSuccess.call(user);
       },
     );
+
+    setBusy(false, key: 'updating_account');
   }
 
   @override
