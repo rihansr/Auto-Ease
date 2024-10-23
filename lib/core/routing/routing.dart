@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/account/view/account_update_view.dart';
 import '../../features/auth/view/login_view.dart';
 import '../../features/auth/view/register_view.dart';
 import '../../features/home/view/home_view.dart';
@@ -30,6 +31,13 @@ final GoRouter routing = GoRouter(
       path: Routes.register,
       builder: (BuildContext context, GoRouterState state) {
         return const RegisterView();
+      },
+    ),
+    GoRoute(
+      name: Routes.update,
+      path: Routes.update,
+      builder: (BuildContext context, GoRouterState state) {
+        return const AccountUpdateView();
       },
     ),
     GoRoute(

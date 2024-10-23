@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../core/config/app_settings.dart';
+import '../../../core/routing/routes.dart';
 import '../../../core/shared/dimens.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
@@ -60,6 +62,7 @@ class _UserInformationSection extends StatelessWidget {
           backgroundColor: Colors.transparent,
           children: [
             ListTile(
+              onTap: () => context.pushNamed(Routes.update),
               leading: CircleAvatar(
                 backgroundColor: theme.colorScheme.primary,
                 child: Text(

@@ -46,7 +46,7 @@ class Service {
       'name': name,
       'price': price,
       if(isCompleted != null) 'is_completed': isCompleted,
-      if(completedAt != null) 'completed_at': completedAt,
+      if(completedAt != null) 'completed_at': Timestamp.fromDate(completedAt!),
     };
   }
 

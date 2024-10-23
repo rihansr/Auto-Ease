@@ -70,7 +70,7 @@ class _NavBar extends StatelessWidget {
               (e) => BottomNavigationBarItem(
                 key: ValueKey(e.key),
                 icon: Badges(
-                  isVisible: e.key == 1,
+                  isVisible: e.key == controller.initialTab,
                   child: Icon(e.value['icon'] as IconData),
                 ),
                 activeIcon: Icon(e.value['active_icon'] as IconData),

@@ -32,6 +32,6 @@ class BookingsViewModel extends BaseViewModel {
     setBusy(false, key: 'fetching_bookings');
   }
 
-  CalendarView get calendarView => calendarController.view ?? CalendarView.month;
-  set calendarView(CalendarView view) => calendarController.view = view;
+  CalendarView get calendarView => calendarController.view ?? CalendarView.week;
+  set calendarView(CalendarView view) => this..calendarController.view = view..notifyListeners();
 }

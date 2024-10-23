@@ -33,8 +33,8 @@ class BookingServicesPage extends StatelessWidget {
             key: ValueKey(i),
             contentPadding: const EdgeInsets.all(0),
             title: Text(service.name),
-            value: controller.bookingServices.contains(service),
-            onChanged: (_) => controller.toggleService(service),
+            value: controller.bookedServices.contains(service),
+            onChanged: (_) => controller.selectedService = service,
           ),
         ),
         TextButton.icon(

@@ -27,50 +27,43 @@ class BookingViewModel extends BaseViewModel {
   ];
 
   // Booking Info
-  late TextEditingController titleController;
-  late TextEditingController descriptionController;
-  DateTime? startAt;
-  late TextEditingController startAtController;
-  DateTime? endAt;
-  late TextEditingController endAtController;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  late DateTime _startAt;
+  TextEditingController startAtController = TextEditingController();
+  late DateTime? _endAt;
+  TextEditingController endAtController = TextEditingController();
 
   // Car Info
   late Vehicle? _carDetails;
-  late TextEditingController carMakeController;
-  late TextEditingController carModelController;
-  late TextEditingController carYearController;
-  late TextEditingController carPlateController;
+  TextEditingController carMakeController = TextEditingController();
+  TextEditingController carModelController = TextEditingController();
+  TextEditingController carYearController = TextEditingController();
+  TextEditingController carPlateController = TextEditingController();
 
   // Customer Info
   late User? _customer;
-  late TextEditingController customerNameController;
-  late TextEditingController customerEmailController;
-  late TextEditingController customerPhoneController;
+  TextEditingController customerNameController = TextEditingController();
+  TextEditingController customerEmailController = TextEditingController();
+  TextEditingController customerPhoneController = TextEditingController();
 
   // Booking Services
-  late List<Service> bookingServices;
+  late List<Service> bookedServices;
 
   // Mechanic Info
   late User? _mechanic;
-  late TextEditingController mechanicNameController;
-  late TextEditingController mechanicEmailController;
-  late TextEditingController mechanicPhoneController;
+  TextEditingController mechanicNameController = TextEditingController();
+  TextEditingController mechanicEmailController = TextEditingController();
+  TextEditingController mechanicPhoneController = TextEditingController();
 
   BookingViewModel(this.context, [this.booking]) {
-    titleController = TextEditingController(text: booking?.title);
-    descriptionController = TextEditingController(text: booking?.description);
-
-    startAt = booking?.startAt;
-    startAtController = TextEditingController(text: startAt?.hhmmaMdyy);
+    titleController.text = booking?.title ?? '';
+    descriptionController.text = booking?.description ?? '';
+    startAt = booking?.startAt ?? DateTime.now();
     endAt = booking?.endAt;
-    endAtController = TextEditingController(text: endAt?.hhmmaMdyy);
-
     carDetails = booking?.carDetails;
-
     customer = booking?.customer;
-
-    bookingServices = booking?.services ?? [];
-
+    bookedServices = booking?.services ?? [];
     mechanic = booking?.mechanic;
   }
 
@@ -80,13 +73,24 @@ class BookingViewModel extends BaseViewModel {
     _fetchServices();
   }
 
+  // Booking info
+  DateTime get startAt => _startAt;
+  set startAt(DateTime at) => this
+    .._startAt = at
+    ..startAtController.text = at.hhmmaMdyy;
+
+  DateTime? get endAt => _endAt;
+  set endAt(DateTime? at) => this
+    .._endAt = at
+    ..startAtController.text = at?.hhmmaMdyy ?? '';
+
   // Customer Info
   User? get customer => _customer;
   set customer(User? customer) => this
     .._customer = customer
-    ..customerNameController = TextEditingController(text: customer?.name)
-    ..customerEmailController = TextEditingController(text: customer?.email)
-    ..customerPhoneController = TextEditingController(text: customer?.phone);
+    ..customerNameController.text = customer?.name ?? ''
+    ..customerEmailController.text = customer?.email ?? ''
+    ..customerPhoneController.text = customer?.phone ?? '';
 
   bool _saveCustomer = false;
   bool get saveCustomer => _saveCustomer;
@@ -136,28 +140,49 @@ class BookingViewModel extends BaseViewModel {
   Vehicle? get carDetails => _carDetails;
   set carDetails(Vehicle? carDetails) => this
     .._carDetails = carDetails
-    ..carMakeController = TextEditingController(text: carDetails?.make)
-    ..carModelController = TextEditingController(text: carDetails?.model)
-    ..carYearController = TextEditingController(text: carDetails?.year)
-    ..carPlateController = TextEditingController(text: carDetails?.plate);
+    ..carMakeController.text = carDetails?.make ?? ''
+    ..carModelController.text = carDetails?.model ?? ''
+    ..carYearController.text = carDetails?.year ?? ''
+    ..carPlateController.text = carDetails?.plate ?? '';
 
   // Booking Services
-  toggleService(Service service) {
-    if (bookingServices.contains(service)) {
-      bookingServices.remove(service);
+  set selectedService(Service service) {
+    if (bookedServices.contains(service)) {
+      bookedServices.remove(service);
     } else {
-      bookingServices.add(service);
+      bookedServices.add(service);
     }
     notifyListeners();
+  }
+
+  // Services
+  set service(Service service) => this
+    ..services.add(service)
+    ..notifyListeners();
+
+  List<Service> services = [];
+  Future<void> _fetchServices() async {
+    setBusy(true, key: 'fetching_services');
+    await firestoreService.invoke(
+      onExecute: (firestore) => firestore.collection('services').get(),
+      onCompleted: (snapshot) {
+        services = snapshot.docs
+            .map(
+              (doc) => Service.fromMap(doc.data()),
+            )
+            .toList();
+      },
+    );
+    setBusy(false, key: 'fetching_services');
   }
 
   // Mechanic Info
   User? get mechanic => _mechanic;
   set mechanic(User? mechanic) => this
     .._mechanic = mechanic
-    ..mechanicNameController = TextEditingController(text: mechanic?.name)
-    ..mechanicEmailController = TextEditingController(text: mechanic?.email)
-    ..mechanicPhoneController = TextEditingController(text: mechanic?.phone);
+    ..mechanicNameController.text = mechanic?.name ?? ''
+    ..mechanicEmailController.text = mechanic?.email ?? ''
+    ..mechanicPhoneController.text = mechanic?.phone ?? '';
 
   bool _saveMechanic = false;
   bool get saveMechanic => _saveMechanic;
@@ -217,34 +242,52 @@ class BookingViewModel extends BaseViewModel {
     );
   }
 
-  // Services
-  set service(Service service) => this
-    ..services.add(service)
-    ..notifyListeners();
+  // Page Navigation
+  previousPage() {
+    switch (pageController.page!.round()) {
+      case 0:
+        Navigator.pop(context);
+        break;
+      default:
+        pageController.previousPage(
+          duration: kDefaultDuration,
+          curve: Curves.easeInOut,
+        );
+    }
+  }
 
-  List<Service> services = [];
-  Future<void> _fetchServices() async {
-    setBusy(true, key: 'fetching_services');
-    await firestoreService.invoke(
-      onExecute: (firestore) => firestore.collection('services').get(),
-      onCompleted: (snapshot) {
-        services = snapshot.docs
-            .map(
-              (doc) => Service.fromMap(doc.data()),
-            )
-            .toList();
-      },
-    );
-    setBusy(false, key: 'fetching_services');
+  nextPage() {
+    final currentPage = pageController.page!.round();
+    if (!validate(formKeys[currentPage])) {
+      return;
+    } else if (currentPage == 3 && bookedServices.isEmpty) {
+      showMessage(string.of(context).noServiceSelected);
+      return;
+    }
+    switch (currentPage) {
+      case 4:
+        Future.wait([
+          if (_saveCustomer) saveCustomerInfo(),
+          if (_saveMechanic) saveMechanicInfo(),
+        ]).then((_) => book());
+        break;
+      default:
+        pageController.nextPage(
+          duration: kDefaultDuration,
+          curve: Curves.easeInOut,
+        );
+    }
   }
 
   Future<void> book() async {
     setBusy(true, key: 'booking');
     final booking = Booking(
       uid: this.booking?.uid ?? firestoreService.uniqueId,
+      bookedBy: authService.user?.uid ?? '',
       title: titleController.text,
       description: descriptionController.text,
-      startAt: startAt!,
+      bookedAt: DateTime.now(),
+      startAt: startAt,
       endAt: endAt!,
       carDetails: Vehicle(
         uid: carDetails?.uid ?? firestoreService.uniqueId,
@@ -267,7 +310,7 @@ class BookingViewModel extends BaseViewModel {
         phone: validator.string(mechanicPhoneController.text),
         role: Role.mechanic,
       ),
-      services: bookingServices,
+      services: bookedServices,
     );
 
     await firestoreService.invoke(
@@ -281,43 +324,6 @@ class BookingViewModel extends BaseViewModel {
     );
 
     setBusy(false, key: 'booking');
-  }
-
-  // Page Navigation
-  previousPage() {
-    switch (pageController.page!.round()) {
-      case 0:
-        Navigator.pop(context);
-        break;
-      default:
-        pageController.previousPage(
-          duration: kDefaultDuration,
-          curve: Curves.easeInOut,
-        );
-    }
-  }
-
-  nextPage() {
-    final currentPage = pageController.page!.round();
-    if (!validate(formKeys[currentPage])) {
-      return;
-    } else if (currentPage == 3 && bookingServices.isEmpty) {
-      showMessage(string.of(context).noServiceSelected);
-      return;
-    }
-    switch (currentPage) {
-      case 4:
-        Future.wait([
-          if (_saveCustomer) saveCustomerInfo(),
-          if (_saveMechanic) saveMechanicInfo(),
-        ]).then((_) => book());
-        break;
-      default:
-        pageController.nextPage(
-          duration: kDefaultDuration,
-          curve: Curves.easeInOut,
-        );
-    }
   }
 
   @override

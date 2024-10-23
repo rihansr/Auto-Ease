@@ -41,8 +41,8 @@ class BookingInfoPage extends StatelessWidget {
           typeable: false,
           onTap: () => showCustomDateTimePicker(
             context: context,
-            minimumDate: controller.startAt ?? DateTime.now(),
-            initialDate: controller.startAt ?? DateTime.now(),
+            minimumDate: controller.startAt,
+            initialDate: controller.startAt,
             maximumDate: DateTime.now().add(const Duration(days: 90)),
             onSelected: (dateTime) {
               controller.startAt = dateTime;
@@ -60,9 +60,8 @@ class BookingInfoPage extends StatelessWidget {
           typeable: false,
           onTap: () => showCustomDateTimePicker(
             context: context,
-            minimumDate: controller.startAt ?? DateTime.now(),
-            initialDate:
-                controller.endAt ?? controller.startAt ?? DateTime.now(),
+            minimumDate: controller.startAt,
+            initialDate: controller.endAt ?? controller.startAt,
             maximumDate: DateTime.now().add(const Duration(days: 90)),
             onSelected: (dateTime) {
               controller.endAt = dateTime;

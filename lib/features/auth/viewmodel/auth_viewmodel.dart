@@ -51,8 +51,8 @@ class AuthViewModel extends BaseViewModel {
     await authService.invoke(
       isolatedAuth: isolatedAuth,
       onExecute: (auth) async => auth.createUserWithEmailAndPassword(
-        email: validator.string(emailController?.text, orElse: '')!,
-        password: validator.string(passwordController?.text, orElse: '')!,
+        email: validator.string(emailController)!,
+        password: validator.string(passwordController)!,
       ),
       onCompleted: (credentials) async {
         if (credentials.user == null) return;
@@ -74,9 +74,9 @@ class AuthViewModel extends BaseViewModel {
     uid ??= firestoreService.uniqueId;
     final user = User(
       uid: uid,
-      name: validator.string(nameController?.text, orElse: '')!,
-      phone: validator.string(phoneController?.text, orElse: '')!,
-      email: validator.string(emailController?.text, orElse: '')!,
+      name: validator.string(nameController)!,
+      phone: validator.string(phoneController, orElse: null)!,
+      email: validator.string(emailController)!,
       role: role,
     );
     firestoreService.invoke(
@@ -100,8 +100,8 @@ class AuthViewModel extends BaseViewModel {
     await authService.invoke(
       isolatedAuth: isolatedAuth,
       onExecute: (auth) async => auth.signInWithEmailAndPassword(
-        email: validator.string(emailController?.text, orElse: '')!,
-        password: validator.string(passwordController?.text, orElse: '')!,
+        email: validator.string(emailController)!,
+        password: validator.string(passwordController)!,
       ),
       onCompleted: (credentials) async {
         if (credentials.user == null) return;
@@ -119,12 +119,12 @@ class AuthViewModel extends BaseViewModel {
     setBusy(true, key: 'updating_account');
 
     final user = this.user!.copyWith(
-          name: validator.string(nameController?.text, orElse: '')!,
-          phone: validator.string(phoneController?.text, orElse: '')!,
-          email: validator.string(emailController?.text, orElse: '')!,
+          name: validator.string(nameController)!,
+          phone: validator.string(phoneController)!,
+          email: validator.string(emailController, orElse: null)!,
           role: role,
         );
-    firestoreService.invoke(
+    await firestoreService.invoke(
       onExecute: (firestore) async => firestore.collection(role.table).update(
             id: user.uid!,
             data: user.toMap(),
