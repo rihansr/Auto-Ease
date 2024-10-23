@@ -63,7 +63,7 @@ class Booking {
       bookedAt: bookedAt ?? this.bookedAt,
       startAt: startAt ?? this.startAt,
       endAt: endAt ?? this.endAt,
-      mechanic: mechanic ?? this.mechanic,
+      mechanic: mechanic,
       status: status ?? this.status,
       services: services ?? this.services,
       notes: notes ?? this.notes,

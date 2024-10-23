@@ -40,6 +40,7 @@ class _AppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final role = context.read<HomeViewModel>().role;
+    final controller = context.read<BookingsViewModel>();
 
     return SliverAppBar(
       centerTitle: false,
@@ -61,7 +62,11 @@ class _AppBar extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) => const NewBookingView(),
-            ),
+            ).then((booking) {
+              if (booking != null) {
+                controller.booking = booking;
+              }
+            }),
           ),
       ],
     );
@@ -75,7 +80,8 @@ class _Bookings extends StatelessWidget {
   Widget build(BuildContext context) {
     final role = context.read<HomeViewModel>().role;
     final listener = context.watch<BookingsViewModel>();
-    bool isLoading = listener.isLoading(key: 'fetching_bookings', orElse: false);
+    bool isLoading =
+        listener.isLoading(key: 'fetching_bookings', orElse: false);
     final bookings = isLoading ? List.filled(3, null) : listener.bookings;
     return SliverSkeletonizer(
       enabled: isLoading,

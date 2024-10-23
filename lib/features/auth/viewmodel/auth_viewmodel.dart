@@ -80,7 +80,7 @@ class AuthViewModel extends BaseViewModel {
       role: role,
     );
     firestoreService.invoke(
-      onExecute: (firestore) async => firestore.collection(role.table).set(
+      onExecute: (firestore) async => await firestore.collection(role.table).set(
             id: uid!,
             data: user.toMap(),
           ),
@@ -125,7 +125,7 @@ class AuthViewModel extends BaseViewModel {
           role: role,
         );
     await firestoreService.invoke(
-      onExecute: (firestore) async => firestore.collection(role.table).update(
+      onExecute: (firestore) async => await firestore.collection(role.table).update(
             id: user.uid!,
             data: user.toMap(),
           ),

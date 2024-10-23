@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/service/auth_service.dart';
 import '../../../core/service/firestore_service.dart';
 import '../../../core/service/navigation_service.dart';
 import '../../../core/shared/local_storage.dart';
 import '../../../core/shared/strings.dart';
+import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/modal_bottomsheet.dart';
 import '../../auth/model/user_model.dart';
+import '../../booking/viewmodel/bookings_viewmodel.dart';
 
 class AccountViewModel extends ChangeNotifier {
   AccountViewModel();
@@ -23,7 +26,7 @@ class AccountViewModel extends ChangeNotifier {
   Future<void> userinfo() async {
     await firestoreService.invoke(
       onExecute: (firestore) async =>
-          firestore.collection('users').doc(authService.user?.uid).get(),
+          await firestore.collection('users').doc(authService.user?.uid).get(),
       onCompleted: (snapshot) => user = User.fromMap(snapshot.data()!),
     );
   }
@@ -39,13 +42,30 @@ class AccountViewModel extends ChangeNotifier {
             string.of(context).wantToLogout,
             textAlign: TextAlign.center,
           ),
-          primaryButtonLabel: string.of(context).logout,
-          primaryButtonColor: Theme.of(context).colorScheme.tertiary,
-          onPrimaryButtonPressed: () {
-            user = null;
-            authService.signOut();
-            navigator.context.pushReplacementNamed(Routes.login);
-          },
+          actions: [
+            Button(
+              label: string.of(context).logout,
+              margin: const EdgeInsets.all(0),
+              background: Theme.of(context).colorScheme.tertiary,
+              onPressed: () => authService.signOut().then(
+                (_) {
+                  user = null;
+                  Navigator.pop(context);
+                  context.read<BookingsViewModel>().reset();
+                  navigator.context.pushReplacementNamed(Routes.login);
+                },
+              ),
+            ),
+            Button(
+              label: string.of(context).cancel,
+              background: Colors.transparent,
+              fontColor: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.w600,
+              margin: const EdgeInsets.all(0),
+              padding: const EdgeInsets.fromLTRB(12, 24, 12, 0),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
         ),
       );
 }

@@ -113,7 +113,7 @@ class CreateBookingViewModel extends BaseViewModel {
     );
 
     await firestoreService.invoke(
-      onExecute: (firestore) async => firestore.collection(user.role.table).set(
+      onExecute: (firestore) async => await firestore.collection(user.role.table).set(
             id: user.uid!,
             data: user.toMap(),
           ),
@@ -129,7 +129,7 @@ class CreateBookingViewModel extends BaseViewModel {
   List<User> customers = [];
   Future<void> _fetchCustomers() async {
     firestoreService.invoke(
-      onExecute: (firestore) => firestore.collection(Role.customer.table).get(),
+      onExecute: (firestore) async => await firestore.collection(Role.customer.table).get(),
       onCompleted: (snapshot) {
         customers = snapshot.docs
             .map(
@@ -168,7 +168,7 @@ class CreateBookingViewModel extends BaseViewModel {
   Future<void> _fetchServices() async {
     setBusy(true, key: 'fetching_services');
     await firestoreService.invoke(
-      onExecute: (firestore) => firestore.collection('services').get(),
+      onExecute: (firestore) async => await firestore.collection('services').get(),
       onCompleted: (snapshot) {
         services = snapshot.docs
             .map(
@@ -214,7 +214,7 @@ class CreateBookingViewModel extends BaseViewModel {
         );
         await firestoreService.invoke(
           onExecute: (firestore) async =>
-              firestore.collection(user.role.table).set(
+              await firestore.collection(user.role.table).set(
                     id: user.uid!,
                     data: user.toMap(),
                   ),
@@ -232,7 +232,7 @@ class CreateBookingViewModel extends BaseViewModel {
   List<User> mechanics = [];
   Future<void> _fetchMechanics() async {
     firestoreService.invoke(
-      onExecute: (firestore) => firestore
+      onExecute: (firestore) async => await firestore
           .collection(Role.mechanic.table)
           .where('role', isEqualTo: Role.mechanic.name)
           .get(),
@@ -318,12 +318,12 @@ class CreateBookingViewModel extends BaseViewModel {
     );
 
     await firestoreService.invoke(
-      onExecute: (firestore) async => firestore.collection('bookings').set(
+      onExecute: (firestore) async => await firestore.collection('bookings').set(
             id: booking.uid,
             data: booking.toMap(),
           ),
       onCompleted: (_) async {
-        Navigator.pop(context);
+        Navigator.pop(context, booking);
       },
     );
 

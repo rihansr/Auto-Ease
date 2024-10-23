@@ -642,14 +642,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2"
-  timelines:
+  timelines_plus:
     dependency: "direct main"
     description:
-      name: timelines
-      sha256: "40214f5ab772ff45459cb8c15e5f60505a6828af0c0eb1eec6f29ed911a4c1c5"
+      name: timelines_plus
+      sha256: ad0d97a0ee21942ee749c603b117794eb97cc6788f0cadc7d76cf1bbb2c26fca
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "1.0.3"
   timezone:
     dependency: transitive
     description:

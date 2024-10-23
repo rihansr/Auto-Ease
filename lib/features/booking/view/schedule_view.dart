@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -6,6 +7,7 @@ import '../../../core/shared/strings.dart';
 import '../../../core/shared/utils.dart';
 import '../../../core/widget/base_widget.dart';
 import '../viewmodel/bookings_viewmodel.dart';
+import 'booking_details_view.dart';
 
 class ScheduleView extends StatelessWidget {
   const ScheduleView({super.key});
@@ -95,6 +97,11 @@ class _CalenderView extends StatelessWidget {
       onTap: (details) {
         if (details.appointments != null) {
           final booking = details.appointments!.first;
+          showCupertinoModalPopup(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => BookingDetailsView(booking: booking),
+          );
         }
       },
     );

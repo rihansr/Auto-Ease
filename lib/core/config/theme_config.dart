@@ -21,7 +21,7 @@ ThemeData theming(ThemeMode mode) {
       brightness: mode == ThemeMode.light ? Brightness.light : Brightness.dark,
       primary: colorPalette.primary,
       onPrimary: colorPalette.onPrimary,
-      onErrorContainer: colorPalette.onPrimaryContainer,
+      onPrimaryContainer: colorPalette.onPrimaryContainer,
       secondary: colorPalette.secondary,
       onSecondary: colorPalette.onSecondary,
       tertiary: colorPalette.tertiary,

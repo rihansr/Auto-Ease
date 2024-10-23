@@ -29,7 +29,7 @@ class ServiceViewModel extends BaseViewModel {
     );
 
     await firestoreService.invoke(
-      onExecute: (firestore) async => firestore.collection('services').set(
+      onExecute: (firestore) async => await firestore.collection('services').set(
             id: service.uid,
             data: service.toMap(),
           ),

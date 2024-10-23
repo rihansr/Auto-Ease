@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../shared/strings.dart';
 import '../shared/styles.dart';
-import 'button_widget.dart';
 
 class ModalBottomSheet extends StatelessWidget {
-  final Text title;
+  final Widget title;
   final Text? subtitle;
   final Widget? content;
-  final String? primaryButtonLabel;
-  final Color? primaryButtonColor;
-  final Function()? onPrimaryButtonPressed;
-  final String? secondaryButtonLabel;
-  final Function()? onSecondaryButtonPressed;
+  final List<Widget> actions;
 
   const ModalBottomSheet({
     super.key,
     required this.title,
     this.subtitle,
     this.content,
-    this.primaryButtonLabel,
-    this.primaryButtonColor,
-    this.onPrimaryButtonPressed,
-    this.secondaryButtonLabel,
-    this.onSecondaryButtonPressed,
+    this.actions = const [],
   });
 
   static show(BuildContext context, Widget Function(BuildContext) builder) =>
@@ -72,28 +62,7 @@ class ModalBottomSheet extends StatelessWidget {
                         content!,
                       ],
                       const SizedBox(height: 32),
-                      Button(
-                        label: primaryButtonLabel ?? string.of(context).okay,
-                        margin: const EdgeInsets.all(0),
-                        background: primaryButtonColor,
-                        onPressed: () {
-                          onPrimaryButtonPressed?.call();
-                          context.pop();
-                        },
-                      ),
-                      Button(
-                        label:
-                            secondaryButtonLabel ?? string.of(context).cancel,
-                        background: Colors.transparent,
-                        fontColor: theme.colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                        margin: const EdgeInsets.all(0),
-                        padding: const EdgeInsets.fromLTRB(12, 24, 12, 0),
-                        onPressed: () {
-                          onSecondaryButtonPressed?.call();
-                          context.pop();
-                        },
-                      ),
+                      ...actions,
                     ],
                   ),
                 ),
