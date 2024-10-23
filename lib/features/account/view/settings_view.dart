@@ -60,6 +60,11 @@ class _UserInformationSection extends StatelessWidget {
       builder: (context, controller, child) {
         return CupertinoFormSection.insetGrouped(
           backgroundColor: Colors.transparent,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(12),
+            color: theme.cardColor,
+          ),
           children: [
             ListTile(
               onTap: () => context.pushNamed(Routes.update),
@@ -94,6 +99,11 @@ class _LanguageSection extends StatelessWidget {
     final theme = Theme.of(context);
     return CupertinoFormSection.insetGrouped(
       backgroundColor: Colors.transparent,
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(12),
+        color: theme.cardColor,
+      ),
       header: Text(string.of(context).language),
       children: Language.values
           .map(
@@ -122,6 +132,11 @@ class _ThemeSection extends StatelessWidget {
     return CupertinoFormSection.insetGrouped(
       backgroundColor: Colors.transparent,
       header: Text(string.of(context).thememode),
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(12),
+        color: theme.cardColor,
+      ),
       children: ThemeMode.values
           .map(
             (mode) => RadioListTile(

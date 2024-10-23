@@ -1,20 +1,23 @@
 import 'package:autoease/core/service/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:autoease/core/shared/utils.dart';
+import 'package:provider/provider.dart';
 import '../../../core/service/auth_service.dart';
 import '../../../core/shared/constants.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/viewmodel/base_viewmodel.dart';
+import '../../account/viewmodel/account_viewmodel.dart';
 import '../../auth/model/user_model.dart';
 import '../model/booking_model.dart';
 import '../model/service_model.dart';
 import '../model/vehicle_model.dart';
 
-class BookingViewModel extends BaseViewModel {
+class CreateBookingViewModel extends BaseViewModel {
   final BuildContext context;
-  Booking? booking;
+  final Booking? booking;
+  late User currentUser;
 
   final PageController pageController = PageController();
 
@@ -56,7 +59,7 @@ class BookingViewModel extends BaseViewModel {
   TextEditingController mechanicEmailController = TextEditingController();
   TextEditingController mechanicPhoneController = TextEditingController();
 
-  BookingViewModel(this.context, [this.booking]) {
+  CreateBookingViewModel(this.context, [this.booking]) {
     titleController.text = booking?.title ?? '';
     descriptionController.text = booking?.description ?? '';
     startAt = booking?.startAt ?? DateTime.now();
@@ -68,6 +71,7 @@ class BookingViewModel extends BaseViewModel {
   }
 
   init() {
+    currentUser = context.read<AccountViewModel>().user!;
     _fetchCustomers();
     _fetchMechanics();
     _fetchServices();
@@ -77,12 +81,12 @@ class BookingViewModel extends BaseViewModel {
   DateTime get startAt => _startAt;
   set startAt(DateTime at) => this
     .._startAt = at
-    ..startAtController.text = at.hhmmaMdyy;
+    ..startAtController.text = at.Mdyyhhmma;
 
   DateTime? get endAt => _endAt;
   set endAt(DateTime? at) => this
     .._endAt = at
-    ..startAtController.text = at?.hhmmaMdyy ?? '';
+    ..startAtController.text = at?.Mdyyhhmma ?? '';
 
   // Customer Info
   User? get customer => _customer;
@@ -283,7 +287,7 @@ class BookingViewModel extends BaseViewModel {
     setBusy(true, key: 'booking');
     final booking = Booking(
       uid: this.booking?.uid ?? firestoreService.uniqueId,
-      bookedBy: authService.user?.uid ?? '',
+      bookedBy: currentUser,
       title: titleController.text,
       description: descriptionController.text,
       bookedAt: DateTime.now(),

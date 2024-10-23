@@ -7,6 +7,7 @@
   "wantToLogout": "Are you sure you want ot logout?",
   "@_LABELS": "<-----------------LABELS----------------->",
   "appName": "AutoEase",
+  "anonymous": "Anonymous",
   "login": "Log in",
   "logout": "Log out",
   "signIn": "Sign In",

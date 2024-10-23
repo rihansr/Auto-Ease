@@ -7,7 +7,7 @@ import '../component/car_info_page.dart';
 import '../component/customer_info_page.dart';
 import '../component/mechanic_info_view.dart';
 import '../model/booking_model.dart';
-import '../viewmodel/booking_viewmodel.dart';
+import '../viewmodel/create_booking_viewmodel.dart';
 import '../widget/page_indicator.dart';
 
 class NewBookingView extends StatelessWidget {
@@ -20,8 +20,8 @@ class NewBookingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<BookingViewModel>(
-      model: BookingViewModel(context, booking),
+    return BaseWidget<CreateBookingViewModel>(
+      model: CreateBookingViewModel(context, booking),
       onInit: (controller) => controller.init(),
       onDispose: (controller) => controller.dispose(),
       builder: (context, controller, _) => Scaffold(

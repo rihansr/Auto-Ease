@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import '../../../core/shared/colors.dart';
-import '../../../core/shared/enums.dart';
 import '../model/booking_model.dart';
 
 class BookingsDataSource extends CalendarDataSource<Booking> {
@@ -39,16 +37,7 @@ class BookingsDataSource extends CalendarDataSource<Booking> {
 
   @override
   Color getColor(int index) {
-    return (() {
-      switch (source[index].status) {
-        case BookingStatus.pending:
-          return ColorPalette.dark().tertiary;
-        case BookingStatus.accepted:
-          return ColorPalette.dark().primary;
-        default:
-          return ColorPalette.dark().secondary;
-      }
-    }());
+    return source[index].alert;
   }
 
   @override

@@ -4,7 +4,7 @@ import '../../../core/shared/strings.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../auth/model/user_model.dart';
-import '../viewmodel/booking_viewmodel.dart';
+import '../viewmodel/create_booking_viewmodel.dart';
 import '../widget/auto_suggessions_text_field.dart';
 import '../widget/page_view_builder.dart';
 import 'user_suggession_item.dart';
@@ -14,8 +14,8 @@ class CustomerInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listener = context.watch<BookingViewModel>();
-    final controller = context.read<BookingViewModel>();
+    final listener = context.watch<CreateBookingViewModel>();
+    final controller = context.read<CreateBookingViewModel>();
     return PageViewBuilder(
       formKey: controller.formKeys[1],
       title: string.of(context).customerInfo,
@@ -33,21 +33,30 @@ class CustomerInfoPage extends StatelessWidget {
           keyboardType: TextInputType.name,
           textCapitalization: TextCapitalization.words,
           suggestionsCallback: (pattern) async => controller.customers.where(
-            (user) => user.name?.toLowerCase().contains(pattern.toLowerCase()) ?? false,
+            (user) =>
+                user.name?.toLowerCase().contains(pattern.toLowerCase()) ??
+                false,
           ),
-          itemBuilder: (context, user) => UserSuggessionItem(key: ValueKey(user.uid), user: user),
-          onSuggestionSelected: (user) => controller..customer = user..notify,
+          itemBuilder: (context, user) =>
+              UserSuggessionItem(key: ValueKey(user.uid), user: user),
+          onSuggestionSelected: (user) => controller
+            ..customer = user
+            ..notify,
         ),
         AutoSuggessionsTextField<User>(
           controller: controller.customerEmailController,
           title: string.of(context).email,
           keyboardType: TextInputType.emailAddress,
           suggestionsCallback: (pattern) async => controller.customers.where(
-            (user) => user.email?.toLowerCase().contains(pattern.toLowerCase()) ?? false,
+            (user) =>
+                user.email?.toLowerCase().contains(pattern.toLowerCase()) ??
+                false,
           ),
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),
-          onSuggestionSelected: (user) => controller..customer = user..notify,
+          onSuggestionSelected: (user) => controller
+            ..customer = user
+            ..notify,
         ),
         AutoSuggessionsTextField<User>(
           controller: controller.customerPhoneController,
@@ -61,7 +70,9 @@ class CustomerInfoPage extends StatelessWidget {
           ),
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),
-          onSuggestionSelected: (user) => controller..customer = user..notify,
+          onSuggestionSelected: (user) => controller
+            ..customer = user
+            ..notify,
         ),
         if (listener.customer?.uid == null)
           CheckboxListTile(

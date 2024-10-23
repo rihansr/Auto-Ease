@@ -31,7 +31,7 @@ class Vehicle {
 
   factory Vehicle.fromMap(Map<String, dynamic> map) {
     return Vehicle(
-      uid: map['id'],
+      uid: map['uid'],
       make: map['make'],
       model: map['model'],
       year: map['year'],
@@ -41,7 +41,7 @@ class Vehicle {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': uid,
+      'uid': uid,
       'make': make,
       'model': model,
       'year': year,

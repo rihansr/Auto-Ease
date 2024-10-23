@@ -13,7 +13,5 @@ extension StringExtension on String {
 }
 
 extension DateTimeExtension on DateTime {
-  String get hhmmaMdyy => DateFormat("hh:mm a M/d/yy").format(this);
-
-  String get EEEMMMdhhmma => DateFormat("EEE, MMM d 'at' hh:mm a").format(this);
+  String get Mdyyhhmma => DateFormat("M/d/yy hh:mm a").format(this);
 }

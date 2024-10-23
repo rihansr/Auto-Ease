@@ -14,8 +14,7 @@ class ScheduleView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return BaseWidget<BookingsViewModel>(
-      model: BookingsViewModel(),
-      onInit: (controller) => controller.init(),
+      model: Provider.of<BookingsViewModel>(context),
       builder: (context, controller, child) => CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -95,7 +94,7 @@ class _CalenderView extends StatelessWidget {
       ),
       onTap: (details) {
         if (details.appointments != null) {
-          final appointment = details.appointments!.first;
+          final booking = details.appointments!.first;
         }
       },
     );

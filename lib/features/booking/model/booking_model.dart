@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../core/shared/colors.dart';
 import '../../../core/shared/enums.dart';
 import '../../auth/model/user_model.dart';
 import 'vehicle_model.dart';
@@ -6,7 +9,7 @@ import 'service_model.dart';
 
 class Booking {
   final String uid;
-  final String bookedBy;
+  final User bookedBy;
   final String title;
   final String? description;
   final User customer;
@@ -37,7 +40,7 @@ class Booking {
 
   Booking copyWith({
     String? uid,
-    String? bookedBy,
+    User? bookedBy,
     String? title,
     String? description,
     User? customer,
@@ -69,8 +72,8 @@ class Booking {
 
   factory Booking.fromMap(Map<String, dynamic> map) {
     return Booking(
-      uid: map['id'],
-      bookedBy: map['booked_by'],
+      uid: map['uid'],
+      bookedBy: User.fromMap(map['booked_by'] ?? {}),
       title: map['title'],
       description: map['description'],
       customer: User.fromMap(map['customer'] ?? {}),
@@ -91,8 +94,8 @@ class Booking {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': uid,
-      'booked_by': bookedBy,
+      'uid': uid,
+      'booked_by': bookedBy.toMap(),
       'title': title,
       'car_details': carDetails.toMap(),
       'customer': customer.toMap(),
@@ -113,4 +116,23 @@ class Booking {
 
   @override
   int get hashCode => uid.hashCode;
+}
+
+extension BookingExtensions on Booking {
+  String get service {
+    return services.map((e) => e.name).join(', ');
+  }
+
+  Color get alert {
+    return (() {
+      switch (status) {
+        case BookingStatus.pending:
+          return ColorPalette.dark().tertiary;
+        case BookingStatus.accepted:
+          return ColorPalette.dark().primary;
+        default:
+          return ColorPalette.dark().secondary;
+      }
+    }());
+  }
 }

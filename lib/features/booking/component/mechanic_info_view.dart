@@ -4,7 +4,7 @@ import '../../../core/shared/strings.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../auth/model/user_model.dart';
-import '../viewmodel/booking_viewmodel.dart';
+import '../viewmodel/create_booking_viewmodel.dart';
 import '../widget/auto_suggessions_text_field.dart';
 import '../widget/page_view_builder.dart';
 import 'user_suggession_item.dart';
@@ -14,8 +14,8 @@ class MechanicInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listener = context.watch<BookingViewModel>();
-    final controller = context.read<BookingViewModel>();
+    final listener = context.watch<CreateBookingViewModel>();
+    final controller = context.read<CreateBookingViewModel>();
     return PageViewBuilder(
       formKey: controller.formKeys[4],
       title: string.of(context).mechanicInfo,
@@ -34,7 +34,9 @@ class MechanicInfoPage extends StatelessWidget {
           keyboardType: TextInputType.name,
           textCapitalization: TextCapitalization.words,
           suggestionsCallback: (pattern) async => controller.mechanics.where(
-            (user) => user.name?.toLowerCase().contains(pattern.toLowerCase()) ?? false,
+            (user) =>
+                user.name?.toLowerCase().contains(pattern.toLowerCase()) ??
+                false,
           ),
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),
@@ -49,7 +51,9 @@ class MechanicInfoPage extends StatelessWidget {
           validator: (value) => validator.validateEmail(value),
           keyboardType: TextInputType.emailAddress,
           suggestionsCallback: (pattern) async => controller.mechanics.where(
-            (user) => user.email?.toLowerCase().contains(pattern.toLowerCase()) ?? false,
+            (user) =>
+                user.email?.toLowerCase().contains(pattern.toLowerCase()) ??
+                false,
           ),
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),

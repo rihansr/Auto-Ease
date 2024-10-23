@@ -6,7 +6,7 @@ import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/listview_builder_widget.dart';
 import '../../service/view/new_service_view.dart';
 import '../model/service_model.dart';
-import '../viewmodel/booking_viewmodel.dart';
+import '../viewmodel/create_booking_viewmodel.dart';
 import '../widget/page_view_builder.dart';
 
 class BookingServicesPage extends StatelessWidget {
@@ -14,8 +14,8 @@ class BookingServicesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listener = context.read<BookingViewModel>();
-    final controller = context.watch<BookingViewModel>();
+    final listener = context.read<CreateBookingViewModel>();
+    final controller = context.watch<CreateBookingViewModel>();
     return PageViewBuilder(
       formKey: controller.formKeys[3],
       title: string.of(context).bookingServices,

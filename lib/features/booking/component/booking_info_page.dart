@@ -5,7 +5,7 @@ import '../../../core/shared/utils.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/text_field_widget.dart';
-import '../viewmodel/booking_viewmodel.dart';
+import '../viewmodel/create_booking_viewmodel.dart';
 import '../widget/date_time_picker.dart';
 import '../widget/page_view_builder.dart';
 
@@ -14,8 +14,8 @@ class BookingInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listener = context.watch<BookingViewModel>();
-    final controller = context.read<BookingViewModel>();
+    final listener = context.watch<CreateBookingViewModel>();
+    final controller = context.read<CreateBookingViewModel>();
     return PageViewBuilder(
       formKey: controller.formKeys[0],
       title: string.of(context).bookingInfo,
@@ -46,7 +46,7 @@ class BookingInfoPage extends StatelessWidget {
             maximumDate: DateTime.now().add(const Duration(days: 90)),
             onSelected: (dateTime) {
               controller.startAt = dateTime;
-              controller.startAtController.text = dateTime.hhmmaMdyy;
+              controller.startAtController.text = dateTime.Mdyyhhmma;
             },
           ),
           keyboardType: TextInputType.datetime,
@@ -65,7 +65,7 @@ class BookingInfoPage extends StatelessWidget {
             maximumDate: DateTime.now().add(const Duration(days: 90)),
             onSelected: (dateTime) {
               controller.endAt = dateTime;
-              controller.endAtController.text = dateTime.hhmmaMdyy;
+              controller.endAtController.text = dateTime.Mdyyhhmma;
             },
           ),
           keyboardType: TextInputType.datetime,

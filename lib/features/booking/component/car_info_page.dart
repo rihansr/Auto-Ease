@@ -4,7 +4,7 @@ import '../../../core/shared/strings.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/text_field_widget.dart';
-import '../viewmodel/booking_viewmodel.dart';
+import '../viewmodel/create_booking_viewmodel.dart';
 import '../widget/page_view_builder.dart';
 
 class CarInfoPage extends StatelessWidget {
@@ -12,8 +12,8 @@ class CarInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listener = context.watch<BookingViewModel>();
-    final controller = context.read<BookingViewModel>();
+    final listener = context.watch<CreateBookingViewModel>();
+    final controller = context.read<CreateBookingViewModel>();
     return PageViewBuilder(
       formKey: controller.formKeys[2],
       title: string.of(context).carInfo,
