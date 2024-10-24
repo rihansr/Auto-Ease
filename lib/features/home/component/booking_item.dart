@@ -111,7 +111,7 @@ class BookingItem extends StatelessWidget {
                 booking?.service ?? '',
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.textTheme.headlineMedium?.color,
+                  color: theme.hintColor,
                   fontWeight: FontWeight.w400,
                 ),
               ),

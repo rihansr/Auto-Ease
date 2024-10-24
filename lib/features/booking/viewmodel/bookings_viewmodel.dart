@@ -57,6 +57,12 @@ class BookingsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  removeBooking(Booking booking) {
+    bookings.remove(booking);
+    dataSource = BookingsDataSource(bookings);
+    notifyListeners();
+  }
+
   reset() => this
     ..bookings.clear()
     ..dataSource = null

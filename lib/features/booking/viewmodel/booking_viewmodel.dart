@@ -75,9 +75,7 @@ class BookingViewModel extends BaseViewModel {
       ),
       onCompleted: (_) async {
         showMessage(string.of(context).requestDeclined, type: AlertType.error);
-        context.read<BookingsViewModel>()
-          ..bookings.remove(booking)
-          ..notify;
+        context.read<BookingsViewModel>().removeBooking(booking);
         booking =
             booking.updateWith(mechanic: null, status: BookingStatus.pending);
         await onSuccess(booking);
@@ -131,7 +129,7 @@ class BookingViewModel extends BaseViewModel {
       onExecute: (firestore) async =>
           await firestore.collection('bookings').doc(booking.uid).delete(),
       onCompleted: (_) {
-        context.read<BookingsViewModel>().bookings.remove(booking);
+        context.read<BookingsViewModel>().removeBooking(booking);
         Navigator.pop(context);
       },
     );

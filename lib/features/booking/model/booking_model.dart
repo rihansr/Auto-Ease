@@ -151,7 +151,7 @@ class Booking {
 
 extension BookingExtensions on Booking {
   String get service {
-    return services.map((e) => e.name).join(', ');
+    return services.map((e) => e.name).join('  •  ');
   }
 
   num get total => services.fold(0, (prev, service) => prev + service.price);

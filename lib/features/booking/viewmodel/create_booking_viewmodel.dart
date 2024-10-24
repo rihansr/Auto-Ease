@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../core/service/analytics_service.dart';
 import '../../../core/service/auth_service.dart';
 import '../../../core/service/firestore_service.dart';
 import '../../../core/shared/constants.dart';
@@ -331,6 +332,7 @@ class CreateBookingViewModel extends BaseViewModel {
                 data: booking.toMap(),
               ),
       onCompleted: (_) async {
+        if(this.booking?.uid == null) analyticsService.logBooking();
         Navigator.pop(context, booking);
       },
     );

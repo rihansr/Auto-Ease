@@ -138,9 +138,6 @@ ThemeData theming(ThemeMode mode) {
         borderRadius: BorderRadius.circular(8),
       ),
     ),
-    bottomSheetTheme: const BottomSheetThemeData().copyWith(
-      backgroundColor: Colors.transparent,
-    ),
     textButtonTheme: TextButtonThemeData(
       style: const ButtonStyle().copyWith(
         overlayColor: const WidgetStatePropertyAll<Color>(

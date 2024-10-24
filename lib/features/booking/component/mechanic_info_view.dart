@@ -20,7 +20,9 @@ class MechanicInfoPage extends StatelessWidget {
       formKey: controller.formKeys[4],
       title: string.of(context).mechanicInfo,
       action: Button(
-        label: string.of(context).book,
+        label: controller.booking == null
+            ? string.of(context).book
+            : string.of(context).save,
         loading: listener.isLoading(),
         onPressed: controller.nextPage,
       ),
@@ -65,6 +67,7 @@ class MechanicInfoPage extends StatelessWidget {
           controller: controller.mechanicPhoneController,
           title: string.of(context).phone,
           autoValidate: controller.enabledAutoValidate,
+          keyboardType: TextInputType.phone,
           suggestionsCallback: (pattern) async => controller.mechanics.where(
             (user) => user.phone?.contains(pattern) ?? false,
           ),

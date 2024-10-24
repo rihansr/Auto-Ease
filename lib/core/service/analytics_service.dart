@@ -28,4 +28,10 @@ class AnalyticsService {
       await _instance.logLogin(loginMethod: 'login');
     }
   }
+
+  Future<void> logBooking() async{
+    if (kReleaseMode) {
+      await _instance.logEvent(name: 'booking');
+    }
+  }
 }

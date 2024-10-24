@@ -62,6 +62,7 @@ class BookingDetailsView extends StatelessWidget {
                 _PaymentSummary(
                   key: ValueKey('payment_summary'),
                 ),
+                SizedBox(height: 12),
               ],
             ),
           ),
@@ -480,7 +481,7 @@ class _PaymentSummary extends StatelessWidget {
     final controller = context.read<BookingViewModel>();
     return controller.role != Role.mechanic
         ? Card(
-            margin: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+            margin: const EdgeInsets.fromLTRB(16, 4, 16, 4),
             child: Column(
               children: [
                 ListTile(
@@ -522,6 +523,7 @@ class _BottomActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final listener = context.watch<BookingViewModel>();
     final controller = context.read<BookingViewModel>();
+    
     return controller.role != Role.admin &&
             listener.booking.status == BookingStatus.completed
         ? const SizedBox.shrink()
@@ -533,8 +535,12 @@ class _BottomActions extends StatelessWidget {
                   ? Button(
                       label: string.of(context).receipt,
                       margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(16)),
-                      onPressed: () => controller.generateReceipt(),
-                      
+                      onPressed: () => showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                barrierColor: Colors.transparent,
+                                builder: (context) => const AddNotesView(),
+                              ),
                     )
                   : Button(
                       label: string.of(context).complete,
