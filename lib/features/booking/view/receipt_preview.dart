@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
+import '../../../core/shared/drawables.dart';
 
 class ReceiptPreview extends StatelessWidget {
   final FutureOr<Uint8List> Function(PdfPageFormat) generator;
@@ -31,8 +33,10 @@ class ReceiptPreview extends StatelessWidget {
         ),
       ],
       pdfFileName: 'Export_${DateTime.now().millisecondsSinceEpoch}',
-      loadingWidget: CupertinoActivityIndicator(
-        color: theme.colorScheme.primary,
+      loadingWidget: LottieBuilder.asset(
+        drawable.loading,
+        height: 48,
+        width: 48,
       ),
       actionBarTheme: PdfActionBarTheme(
         backgroundColor: theme.scaffoldBackgroundColor,

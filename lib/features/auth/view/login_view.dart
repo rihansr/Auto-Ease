@@ -42,7 +42,12 @@ class LoginView extends StatelessWidget {
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
         ),
-        const SizedBox(height: 16),
+        TextButton(
+          onPressed: () => context.pushNamed(Routes.forgetPass),
+          child: Text(
+            string.of(context).forgotPassword,
+          ),
+        ),
         Button(
           label: string.of(context).signIn,
           onPressed: () => controller.signIn(

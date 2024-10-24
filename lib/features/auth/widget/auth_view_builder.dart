@@ -10,6 +10,7 @@ import '../viewmodel/auth_viewmodel.dart';
 
 class AuthViewBuilder extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final AuthViewModel controller;
   final Function(AuthViewModel)? onInit;
   final List<Widget> Function(
@@ -20,6 +21,7 @@ class AuthViewBuilder extends StatelessWidget {
   const AuthViewBuilder({
     super.key,
     required this.title,
+    this.subtitle,
     required this.controller,
     this.onInit,
     required this.builder,
@@ -55,10 +57,11 @@ class AuthViewBuilder extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  string.of(context).enterYourDetails,
+                  subtitle ?? string.of(context).enterYourDetails,
                   style: theme.textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 8),
                 Form(
                   key: controller.formKey,
                   child: Column(

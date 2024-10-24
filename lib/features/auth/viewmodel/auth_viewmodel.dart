@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:autoease/core/shared/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import '../../../core/service/auth_service.dart';
@@ -28,6 +29,10 @@ class AuthViewModel extends BaseViewModel {
         emailController = TextEditingController(),
         phoneController = TextEditingController(),
         passwordController = TextEditingController();
+
+  AuthViewModel.forgetPass(this.context)
+      : formKey = GlobalKey<FormState>(),
+        emailController = TextEditingController();
 
   AuthViewModel.update(this.context, this.user)
       : formKey = GlobalKey<FormState>(),
@@ -80,10 +85,11 @@ class AuthViewModel extends BaseViewModel {
       role: role,
     );
     firestoreService.invoke(
-      onExecute: (firestore) async => await firestore.collection(role.table).set(
-            id: uid!,
-            data: user.toMap(),
-          ),
+      onExecute: (firestore) async =>
+          await firestore.collection(role.table).set(
+                id: uid!,
+                data: user.toMap(),
+              ),
       onCompleted: (_) async {
         await onSuccess.call(user);
       },
@@ -111,6 +117,23 @@ class AuthViewModel extends BaseViewModel {
     setBusy(false, key: 'signing_in');
   }
 
+  Future<void> forgetPassword({
+    required FutureOr Function() onSuccess,
+  }) async {
+    if (!validate(formKey)) return;
+    setBusy(true, key: 'sending_reset_email');
+    await authService.invoke(
+      onExecute: (auth) async => await auth.sendPasswordResetEmail(
+        email: validator.string(emailController)!,
+      ),
+      onCompleted: (_) async {
+        showMessage(string.of(context).resetEmailSent);
+        await onSuccess.call();
+      },
+    );
+    setBusy(false, key: 'sending_reset_email');
+  }
+
   Future<void> updateAccount({
     required FutureOr Function(User) onSuccess,
   }) async {
@@ -125,10 +148,11 @@ class AuthViewModel extends BaseViewModel {
           role: role,
         );
     await firestoreService.invoke(
-      onExecute: (firestore) async => await firestore.collection(role.table).update(
-            id: user.uid!,
-            data: user.toMap(),
-          ),
+      onExecute: (firestore) async =>
+          await firestore.collection(role.table).update(
+                id: user.uid!,
+                data: user.toMap(),
+              ),
       onCompleted: (_) async {
         await onSuccess.call(user);
       },
