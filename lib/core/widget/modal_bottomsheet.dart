@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../shared/styles.dart';
 
 class ModalBottomSheet extends StatelessWidget {
   final Widget title;

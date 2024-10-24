@@ -87,18 +87,16 @@ class RegisterView extends StatelessWidget {
         Button(
           label: string.of(context).signUp,
           onPressed: () => controller.signUp(
-            onSuccess: (user) async {
-              await controller.saveUser(
+            onSuccess: (user) async => await controller.saveUser(
                 uid: user.uid,
                 onSuccess: (user) {
                   context.read<AccountViewModel>().user = user;
                   analyticsService.logUser(user.uid);
                   analyticsService.logRegister();
+                  context.pop();
+                  context.pushReplacementNamed(Routes.home);
                 },
-              );
-              context.pop();
-              context.pushReplacementNamed(Routes.home);
-            },
+              ),
           ),
           loading: controller.isLoading(key: 'signing_up', orElse: false),
         ),

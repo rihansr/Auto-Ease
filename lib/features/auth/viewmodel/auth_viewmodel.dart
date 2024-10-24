@@ -55,7 +55,7 @@ class AuthViewModel extends BaseViewModel {
 
     await authService.invoke(
       isolatedAuth: isolatedAuth,
-      onExecute: (auth) async => auth.createUserWithEmailAndPassword(
+      onExecute: (auth) async => await auth.createUserWithEmailAndPassword(
         email: validator.string(emailController)!,
         password: validator.string(passwordController)!,
       ),
