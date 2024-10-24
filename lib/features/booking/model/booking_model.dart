@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import '../../../core/shared/colors.dart';
 import '../../../core/shared/enums.dart';
 import '../../auth/model/user_model.dart';
@@ -39,6 +38,38 @@ class Booking {
   });
 
   Booking copyWith({
+    String? uid,
+    User? bookedBy,
+    String? title,
+    String? description,
+    User? customer,
+    Vehicle? carDetails,
+    DateTime? bookedAt,
+    DateTime? startAt,
+    DateTime? endAt,
+    User? mechanic,
+    BookingStatus? status,
+    List<Service>? services,
+    String? notes,
+  }) {
+    return Booking(
+      uid: uid ?? this.uid,
+      bookedBy: bookedBy ?? this.bookedBy,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      customer: customer ?? this.customer,
+      carDetails: carDetails ?? this.carDetails,
+      bookedAt: bookedAt ?? this.bookedAt,
+      startAt: startAt ?? this.startAt,
+      endAt: endAt ?? this.endAt,
+      mechanic: mechanic ?? this.mechanic,
+      status: status ?? this.status,
+      services: services ?? this.services,
+      notes: notes ?? this.notes,
+    );
+  }
+
+  Booking updateWith({
     String? uid,
     User? bookedBy,
     String? title,
@@ -123,6 +154,8 @@ extension BookingExtensions on Booking {
     return services.map((e) => e.name).join(', ');
   }
 
+  num get total => services.fold(0, (prev, service) => prev + service.price);
+
   Color get alert {
     return (() {
       switch (status) {
@@ -130,8 +163,8 @@ extension BookingExtensions on Booking {
           return ColorPalette.dark().tertiary;
         case BookingStatus.accepted:
           return ColorPalette.dark().primary;
-        default:
-          return ColorPalette.dark().secondary;
+        case BookingStatus.completed:
+          return Colors.green;
       }
     }());
   }

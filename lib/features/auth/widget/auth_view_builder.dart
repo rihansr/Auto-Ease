@@ -28,16 +28,17 @@ class AuthViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BaseWidget<AuthViewModel>(
-      model: controller,
-      onInit: onInit,
-      onDispose: (controller) => controller.dispose(),
-      builder: (context, controller, child) => Scaffold(
-        appBar: AppBar(),
-        extendBodyBehindAppBar: true,
-        body: Backdrop(
-          child: SafeArea(
-            child: CardBox(
+    return Scaffold(
+      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      body: Backdrop(
+        child: SafeArea(
+          child: BaseWidget<AuthViewModel>(
+            model: controller,
+            onInit: onInit,
+            onDispose: (controller) => controller.dispose(),
+            builder: (context, controller, child) => CardBox(
               children: [
                 SvgPicture.asset(
                   width: dimen.width / 2.5,

@@ -25,8 +25,8 @@ class Service {
       uid: uid,
       name: name ?? this.name,
       price: price ?? this.price,
-      isCompleted: isCompleted ?? this.isCompleted,
-      completedAt: completedAt ?? this.completedAt,
+      isCompleted: isCompleted,
+      completedAt: completedAt,
     );
   }
 

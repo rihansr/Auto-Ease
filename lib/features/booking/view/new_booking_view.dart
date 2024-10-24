@@ -36,7 +36,7 @@ class NewBookingView extends StatelessWidget {
         body: Backdrop(
           child: SafeArea(
             child: PageView(
-              //physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller.pageController,
               children: const [
                 BookingInfoPage(

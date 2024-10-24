@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
+import '../../../core/shared/styles.dart';
 import '../../../core/shared/utils.dart';
 import '../../../core/widget/modal_bottomsheet.dart';
 import '../../booking/model/booking_model.dart';
@@ -51,15 +52,7 @@ class BookingItem extends StatelessWidget {
               contentPadding: const EdgeInsets.all(16),
               dense: true,
               horizontalTitleGap: 12,
-              leading: CircleAvatar(
-                backgroundColor: theme.colorScheme.primary,
-                child: Text(
-                  user?.name?.first ?? '',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: theme.colorScheme.onPrimary,
-                  ),
-                ),
-              ),
+              leading: style.avatar(user?.name ?? ''),
               title: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerLeft,

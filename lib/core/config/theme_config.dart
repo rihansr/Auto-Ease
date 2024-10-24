@@ -49,6 +49,7 @@ ThemeData theming(ThemeMode mode) {
       size: 24,
     ),
     appBarTheme: const AppBarTheme().copyWith(
+      toolbarHeight: 88.0,
       color: Colors.transparent,
       shadowColor: colorPalette.shadow,
       foregroundColor: colorPalette.icon,
@@ -89,6 +90,21 @@ ThemeData theming(ThemeMode mode) {
             : colorPalette.outline,
       ),
     ),
+    listTileTheme: const ListTileThemeData().copyWith(
+      titleTextStyle: TextStyle(
+        fontSize: 16,
+        height: 1.5,
+        letterSpacing: 0.15,
+        color: colorPalette.headline,
+        fontWeight: FontWeight.w400,
+      ),
+      subtitleTextStyle: TextStyle(
+        fontSize: 14,
+        height: 1.43,
+        color: colorPalette.hint,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
     radioTheme: RadioThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color?>(
         (Set<WidgetState> states) => colorPalette.primary,
@@ -121,6 +137,9 @@ ThemeData theming(ThemeMode mode) {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData().copyWith(
+      backgroundColor: Colors.transparent,
     ),
     textButtonTheme: TextButtonThemeData(
       style: const ButtonStyle().copyWith(

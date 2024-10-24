@@ -41,7 +41,7 @@ class MechanicInfoPage extends StatelessWidget {
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),
           onSuggestionSelected: (user) => controller
-            ..customer = user
+            ..mechanic = user
             ..notify,
         ),
         AutoSuggessionsTextField<User>(
@@ -58,23 +58,20 @@ class MechanicInfoPage extends StatelessWidget {
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),
           onSuggestionSelected: (user) => controller
-            ..customer = user
+            ..mechanic = user
             ..notify,
         ),
         AutoSuggessionsTextField<User>(
           controller: controller.mechanicPhoneController,
           title: string.of(context).phone,
           autoValidate: controller.enabledAutoValidate,
-          validator: (value) =>
-              validator.validateField(value, field: string.of(context).phone),
-          keyboardType: TextInputType.phone,
           suggestionsCallback: (pattern) async => controller.mechanics.where(
             (user) => user.phone?.contains(pattern) ?? false,
           ),
           itemBuilder: (context, user) =>
               UserSuggessionItem(key: ValueKey(user.uid), user: user),
           onSuggestionSelected: (user) => controller
-            ..customer = user
+            ..mechanic = user
             ..notify,
         ),
         if (listener.mechanic?.uid == null)

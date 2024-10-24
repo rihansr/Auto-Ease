@@ -18,7 +18,7 @@ enum Role {
   }
 }
 
-enum BookingStatus { pending, accepted, completed, cancelled }
+enum BookingStatus { pending, accepted, completed }
 
 enum Language {
   english,

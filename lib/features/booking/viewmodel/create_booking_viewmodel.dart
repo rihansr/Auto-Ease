@@ -1,8 +1,8 @@
-import 'package:autoease/core/service/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:autoease/core/shared/utils.dart';
 import 'package:provider/provider.dart';
 import '../../../core/service/auth_service.dart';
+import '../../../core/service/firestore_service.dart';
 import '../../../core/shared/constants.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
@@ -86,7 +86,7 @@ class CreateBookingViewModel extends BaseViewModel {
   DateTime? get endAt => _endAt;
   set endAt(DateTime? at) => this
     .._endAt = at
-    ..startAtController.text = at?.Mdyyhhmma ?? '';
+    ..endAtController.text = at?.Mdyyhhmma ?? '';
 
   // Customer Info
   User? get customer => _customer;
@@ -113,10 +113,11 @@ class CreateBookingViewModel extends BaseViewModel {
     );
 
     await firestoreService.invoke(
-      onExecute: (firestore) async => await firestore.collection(user.role.table).set(
-            id: user.uid!,
-            data: user.toMap(),
-          ),
+      onExecute: (firestore) async =>
+          await firestore.collection(user.role.table).set(
+                id: user.uid!,
+                data: user.toMap(),
+              ),
       onCompleted: (_) async {
         customer = user;
         _saveCustomer = false;
@@ -129,7 +130,8 @@ class CreateBookingViewModel extends BaseViewModel {
   List<User> customers = [];
   Future<void> _fetchCustomers() async {
     firestoreService.invoke(
-      onExecute: (firestore) async => await firestore.collection(Role.customer.table).get(),
+      onExecute: (firestore) async =>
+          await firestore.collection(Role.customer.table).get(),
       onCompleted: (snapshot) {
         customers = snapshot.docs
             .map(
@@ -168,7 +170,8 @@ class CreateBookingViewModel extends BaseViewModel {
   Future<void> _fetchServices() async {
     setBusy(true, key: 'fetching_services');
     await firestoreService.invoke(
-      onExecute: (firestore) async => await firestore.collection('services').get(),
+      onExecute: (firestore) async =>
+          await firestore.collection('services').get(),
       onCompleted: (snapshot) {
         services = snapshot.docs
             .map(
@@ -301,27 +304,32 @@ class CreateBookingViewModel extends BaseViewModel {
         plate: validator.string(carPlateController.text)!,
       ),
       customer: User(
-        uid: customer?.uid,
+        uid: validator.isMatch(customerEmailController.text, customer?.email)
+            ? customer?.uid
+            : null,
         name: validator.string(customerNameController.text),
         email: validator.string(customerEmailController.text, orElse: null),
         phone: validator.string(customerPhoneController.text),
         role: Role.customer,
       ),
       mechanic: User(
-        uid: mechanic?.uid,
+        uid: validator.isMatch(mechanicEmailController.text, mechanic?.email)
+            ? mechanic?.uid
+            : null,
         name: validator.string(mechanicNameController.text),
         email: validator.string(mechanicEmailController.text),
-        phone: validator.string(mechanicPhoneController.text),
+        phone: validator.string(mechanicPhoneController.text, orElse: null),
         role: Role.mechanic,
       ),
       services: bookedServices,
     );
 
     await firestoreService.invoke(
-      onExecute: (firestore) async => await firestore.collection('bookings').set(
-            id: booking.uid,
-            data: booking.toMap(),
-          ),
+      onExecute: (firestore) async =>
+          await firestore.collection('bookings').set(
+                id: booking.uid,
+                data: booking.toMap(),
+              ),
       onCompleted: (_) async {
         Navigator.pop(context, booking);
       },

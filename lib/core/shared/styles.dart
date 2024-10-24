@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../../core/shared/utils.dart';
 import '../service/navigation_service.dart';
 import 'colors.dart';
 import 'enums.dart';
@@ -11,6 +12,25 @@ class _Style {
   _Style._();
 
   final defaultBlur = ImageFilter.blur(sigmaX: 4, sigmaY: 4);
+
+  final defaultDecoration = BoxDecoration(
+    shape: BoxShape.rectangle,
+    borderRadius: BorderRadius.circular(12),
+    color: Theme.of(navigator.context).cardColor,
+  );
+
+  Widget avatar(String label) {
+    final theme = Theme.of(navigator.context);
+    return CircleAvatar(
+      backgroundColor: theme.colorScheme.primary,
+      child: Text(
+        label.first,
+        style: theme.textTheme.titleLarge?.copyWith(
+          color: theme.colorScheme.onPrimary,
+        ),
+      ),
+    );
+  }
 
   SnackBar snackbar(
     String message, {

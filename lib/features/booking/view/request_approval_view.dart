@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:timelines_plus/timelines_plus.dart';
-import '../../../core/shared/colors.dart';
 import '../../../core/shared/strings.dart';
+import '../../../core/shared/styles.dart';
 import '../../../core/shared/utils.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/widget/button_widget.dart';
 import '../../../core/widget/modal_bottomsheet.dart';
 import '../model/booking_model.dart';
 import '../viewmodel/booking_viewmodel.dart';
-import '../viewmodel/bookings_viewmodel.dart';
 import 'booking_details_view.dart';
 
 class RequestApprovalView extends StatelessWidget {
@@ -32,15 +31,7 @@ class RequestApprovalView extends StatelessWidget {
           title: ListTile(
             dense: true,
             contentPadding: const EdgeInsets.all(0),
-            leading: CircleAvatar(
-              backgroundColor: theme.colorScheme.primary,
-              child: Text(
-                booking.bookedBy.name?.first ?? '',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                ),
-              ),
-            ),
+            leading: style.avatar(controller.booking.bookedBy.name ?? ''),
             title: Text(
               booking.bookedBy.name ?? string.of().anonymous,
               style: theme.textTheme.titleMedium?.copyWith(
@@ -49,10 +40,9 @@ class RequestApprovalView extends StatelessWidget {
             ),
             subtitle: Text(
               validator.string(
-                    booking.bookedBy.phone,
-                    orElse: booking.bookedBy.email,
-                  ) ??
-                  'N/A',
+                    booking.bookedBy.email,
+                    orElse: booking.bookedBy.phone ?? 'N/A',
+                  )!,
               style: theme.textTheme.labelMedium,
             ),
           ),
@@ -94,7 +84,6 @@ class RequestApprovalView extends StatelessWidget {
                   controller.isLoading(key: 'accepting_request', orElse: false),
               onPressed: () => controller.acceptRequest(
                 onSuccess: (booking) {
-                  context.read<BookingsViewModel>().booking = booking;
                   Navigator.pop(context);
                   showCupertinoModalPopup(
                     context: context,
@@ -115,9 +104,6 @@ class RequestApprovalView extends StatelessWidget {
                   controller.isLoading(key: 'declining_request', orElse: false),
               onPressed: () => controller.declineRequest(
                 onSuccess: (booking) {
-                  context.read<BookingsViewModel>()
-                    ..bookings.remove(booking)
-                    ..notify;
                   Navigator.pop(context);
                 },
               ),
