@@ -523,7 +523,7 @@ class _BottomActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final listener = context.watch<BookingViewModel>();
     final controller = context.read<BookingViewModel>();
-    
+
     return controller.role != Role.admin &&
             listener.booking.status == BookingStatus.completed
         ? const SizedBox.shrink()
@@ -535,12 +535,7 @@ class _BottomActions extends StatelessWidget {
                   ? Button(
                       label: string.of(context).receipt,
                       margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(16)),
-                      onPressed: () => showModalBottomSheet(
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Colors.transparent,
-                                builder: (context) => const AddNotesView(),
-                              ),
+                      onPressed: () => controller.generateReceipt(),
                     )
                   : Button(
                       label: string.of(context).complete,
@@ -552,7 +547,8 @@ class _BottomActions extends StatelessWidget {
                           ? () => showModalBottomSheet(
                                 context: context,
                                 backgroundColor: Colors.transparent,
-                                barrierColor: Colors.transparent,
+                                isScrollControlled: true,
+                                isDismissible: false,
                                 builder: (context) => const AddNotesView(),
                               ).then(
                                 (notes) => controller

@@ -30,54 +30,61 @@ class _AddNotesViewState extends State<AddNotesView> {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: style.defaultBlur,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: BackdropFilter(
+          filter: style.defaultBlur,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Card(
-                margin: const EdgeInsets.all(16),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      TextFieldWidget(
-                        controller: _notesController,
-                        maxLines: 3,
-                        keyboardType: TextInputType.multiline,
-                        textCapitalization: TextCapitalization.sentences,
+              Stack(
+                children: [
+                  Card(
+                    margin: const EdgeInsets.all(16),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          TextFieldWidget(
+                            controller: _notesController,
+                            maxLines: 3,
+                            keyboardType: TextInputType.multiline,
+                            textCapitalization: TextCapitalization.sentences,
+                          ),
+                          const SizedBox(height: 16),
+                          Button(
+                            label: string.of(context).complete,
+                            onPressed: () => Navigator.pop(
+                              context,
+                              validator.string(_notesController, orElse: null),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 16),
-                      Button(
-                        label: string.of(context).complete,
-                        onPressed: () => Navigator.pop(
-                          context,
-                          validator.string(_notesController, orElse: null),
-                        ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 16,
+                    right: 16,
+                    child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: Transform.rotate(
+                        angle: 0.785398,
+                        child: const Icon(Iconsax.add, size: 28),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-              Positioned(
-                top: 16,
-                right: 16,
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: Transform.rotate(
-                    angle: 0.785398,
-                    child: const Icon(Iconsax.add, size: 28),
-                  ),
-                ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

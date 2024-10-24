@@ -21,67 +21,63 @@ class ModalBottomSheet extends StatelessWidget {
       showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
-        barrierColor: Colors.transparent,
         builder: builder,
       );
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BackdropFilter(
-      filter: style.defaultBlur,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
-            children: [
-              Card(
-                margin: const EdgeInsets.all(16),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      DefaultTextStyle(
-                        style: theme.textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        child: title,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          children: [
+            Card(
+              margin: const EdgeInsets.all(16),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DefaultTextStyle(
+                      style: theme.textTheme.titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: 8),
-                        DefaultTextStyle(
-                          style: theme.textTheme.labelMedium!,
-                          child: subtitle!,
-                        ),
-                      ],
-                      if (content != null) ...[
-                        const SizedBox(height: 24),
-                        content!,
-                      ],
-                      const SizedBox(height: 32),
-                      ...actions,
+                      child: title,
+                    ),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 8),
+                      DefaultTextStyle(
+                        style: theme.textTheme.labelMedium!,
+                        child: subtitle!,
+                      ),
                     ],
-                  ),
+                    if (content != null) ...[
+                      const SizedBox(height: 24),
+                      content!,
+                    ],
+                    const SizedBox(height: 32),
+                    ...actions,
+                  ],
                 ),
               ),
-              Positioned(
-                top: 16,
-                right: 16,
-                child: IconButton(
-                  onPressed: () => context.pop(),
-                  icon: Transform.rotate(
-                    angle: 0.785398,
-                    child: const Icon(Iconsax.add, size: 28),
-                  ),
+            ),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: IconButton(
+                onPressed: () => context.pop(),
+                icon: Transform.rotate(
+                  angle: 0.785398,
+                  child: const Icon(Iconsax.add, size: 28),
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
