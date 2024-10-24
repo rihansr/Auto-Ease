@@ -22,12 +22,12 @@ enum BookingStatus { pending, accepted, completed }
 
 enum Language {
   english,
-  newZealand;
+  spanish;
 
   String get displayName {
     switch (this) {
-      case Language.newZealand:
-        return 'New Zealand';
+      case Language.spanish:
+        return 'Español';
       default:
         return 'English';
     }
@@ -35,8 +35,8 @@ enum Language {
 
   Locale get locale {
     switch (this) {
-      case Language.newZealand:
-        return const Locale('en', 'NZ');
+      case Language.spanish:
+        return const Locale('es', 'ES');
       default:
         return const Locale('en', 'US');
     }

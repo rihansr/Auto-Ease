@@ -1,0 +1,170 @@
+{
+    "@@locale": "es",
+    "@_TITLES": "<-----------------TITLES----------------->",
+    "enterYourDetails": "¡Bienvenido de nuevo! Por favor, introduzca sus datos.",
+    "alreadyHaveAnAccount": "¿Ya tienes una cuenta?",
+    "dontHaveAnAccount": "¿Nuevo en AutoEase?",
+    "wantToLogout": "¿Estás seguro de que quieres cerrar la sesión?",
+    "@_LABELS": "<-----------------LABELS----------------->",
+    "appName": "AutoEase",
+    "anonymous": "Anónimo",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "signIn": "Registrarse",
+    "register": "Registrarse",
+    "accountUpdate": "Actualización de la cuenta",
+    "signUp": "Regístrate",
+    "price": "Precio",
+    "amount": "{amount}",
+    "@amount": {
+      "placeholders": {
+        "amount": {
+          "type": "num",
+          "format": "currency",
+          "example": "100.00",
+          "description": "Precio del servicio",
+          "optionalParameters": {
+            "decimalDigits": 2,
+            "name": "USD",
+            "symbol": "$",
+            "customPattern": "¤#0.00"
+          }
+        }
+      }
+    },
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "accept": "Aceptar",
+    "decline": "Disminución",
+    "okay": "De acuerdo",
+    "retry": "Reintentar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "complete": "Completo",
+    "save": "Guardar",
+    "next": "Siguiente",
+    "book": "Libro",
+    "receipt": "Recibo",
+    "schedule": "Programar",
+    "bookings": "Reservas",
+    "paymentSummary": "Resumen de pago",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "bookingDetails": "Detalles de la reserva",
+    "bookingId": "ID de reserva",
+    "bookedOn": "Reservado en",
+    "requests": "Solicitudes",
+    "settings": "Ajustes",
+    "language": "Idioma",
+    "assignedBy": "Asignado por",
+    "customer": "Cliente",
+    "mechanic": "Mecánico",
+    "thememode": "Modo de tema",
+    "annonymous": "Anónimo",
+    "newBooking": "Nueva reserva",
+    "newService": "Nuevo servicio",
+    "bookingInfo": "Información de la reserva",
+    "saveMechanic": "Guardar mecánico",
+    "saveCustomer": "Guardar cliente",
+    "title": "Título",
+    "description": "Descripción",
+    "startAt": "Comenzar en",
+    "endAt": "Terminar en",
+    "carInfo": "Información del coche",
+    "make": "Hacer",
+    "model": "Modelo",
+    "year": "Año",
+    "notes": "Notas",
+    "regPlate": "Placa de matrícula",
+    "customerInfo": "Información del cliente",
+    "bookingServices": "Servicios de reserva",
+    "mechanicInfo": "Información del mecánico",
+    "@_HINTS": "<-----------------HINTS----------------->",
+    "nameHint": "John Doe",
+    "emailHint": "johndoe@example.com",
+    "phoneHint": "+64 ••• ••• •••",
+    "passwordHint": "••••••••",
+    "bookingDateHint": "--:-- -- -/-/--",
+    "yearHint": "--/--",
+    "@_MESSAGES": "<-----------------MESSAGES----------------->",
+    "someErrorOccured": "¡Algo salió mal! Por favor, inténtelo de nuevo.",
+    "requestDeclined": "¡Solicitud rechazada!",
+    "requestAccepted": "¡Solicitud aceptada!",
+    "noServiceSelected": "No se ha seleccionado ningún servicio",
+    "emptyField": "{field, select, null{Campo} other {{field}}} es requerido",
+    "@emptyField": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        }
+      }
+    },
+    "inputLengthError": "{field, select, null{Field must have {min} to {max} characters} other {{field} must have {min} to {max} characters}}",
+    "@inputLengthError": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        },
+        "min": {
+          "type": "int"
+        },
+        "max": {
+          "type": "int"
+        }
+      }
+    },
+    "inputMinLengthError": "{field, select, null{Field must have at least {min} characters} other {{field} must have at least {min} characters}}",
+    "@inputMinLengthError": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        },
+        "min": {
+          "type": "int"
+        }
+      }
+    },
+    "inputMaxLengthError": "{field, select, null{Field can contain upto {max} characters} other {{field} can contain upto {max} characters}}",
+    "@inputMaxLengthError": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        },
+        "max": {
+          "type": "int"
+        }
+      }
+    },
+    "inputMaxValueError": "{field, select, null{Field max limit {value} characters} other {{field} max limit {value}}}",
+    "@inputMaxValueError": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        },
+        "value": {
+          "type": "String"
+        }
+      }
+    },
+    "oldPassword": "Contraseña antigua",
+    "fieldNotMatch": "{field, select, null{Field} other {{field}}} no coincide",
+    "@fieldNotMatch": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        }
+      }
+    },
+    "notValidField": "Introduzca un {field, select, null{Field} other {{field}}} válido",
+    "@notValidField": {
+      "placeholders": {
+        "field": {
+          "type": "String"
+        }
+      }
+    }
+  }
