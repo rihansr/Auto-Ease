@@ -10,8 +10,6 @@ class _Drawable {
 
   /// Other
   final loading = 'assets/animations/loading.json';
-
-  String placeholder([String? text]) => text == null
-      ? ""
-      : "https://via.placeholder.com/150/e6ebf3/b0c1db/?text=$text";
+  final empty = 'assets/animations/empty.json';
+  final receiptLogo = 'assets/images/receipt_logo.png';
 }

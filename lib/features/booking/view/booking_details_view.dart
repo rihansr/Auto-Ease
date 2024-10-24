@@ -50,6 +50,9 @@ class BookingDetailsView extends StatelessWidget {
                 _UsersInfo(
                   key: ValueKey('users_info'),
                 ),
+                _CarInfo(
+                  key: ValueKey('car_info'),
+                ),
                 _BookingServices(
                   key: ValueKey('booking_services'),
                 ),
@@ -187,46 +190,49 @@ class _PopupActions extends StatelessWidget {
     final listener = context.watch<BookingViewModel>();
     final controller = context.read<BookingViewModel>();
 
-    return listener.booking.status != BookingStatus.completed && controller.role == Role.admin ? PopupMenuButton(
-      itemBuilder: (context) {
-        return {
-          0: {
-            'icon': Iconsax.edit,
-            'label': string.of(context).edit,
-          },
-          1: {
-            'icon': Iconsax.trash,
-            'label': string.of(context).delete,
-          }
-        }
-            .entries
-            .map(
-              (entry) => PopupMenuItem(
-                value: entry.key,
-                child: ListTile(
-                  dense: true,
-                  minLeadingWidth: 0,
-                  leading: Icon(
-                    entry.value['icon'] as IconData,
-                    size: 16,
-                  ),
-                  title: Text(entry.value['label'] as String),
-                ),
-              ),
-            )
-            .toList();
-      },
-      onSelected: (int value) {
-        switch (value) {
-          case 0:
-            controller.editBooking();
-            break;
-          case 1:
-            controller.deleteBooking();
-            break;
-        }
-      },
-    ) : const SizedBox.shrink();
+    return listener.booking.status != BookingStatus.completed &&
+            controller.role == Role.admin
+        ? PopupMenuButton(
+            itemBuilder: (context) {
+              return {
+                0: {
+                  'icon': Iconsax.edit,
+                  'label': string.of(context).edit,
+                },
+                1: {
+                  'icon': Iconsax.trash,
+                  'label': string.of(context).delete,
+                }
+              }
+                  .entries
+                  .map(
+                    (entry) => PopupMenuItem(
+                      value: entry.key,
+                      child: ListTile(
+                        dense: true,
+                        minLeadingWidth: 0,
+                        leading: Icon(
+                          entry.value['icon'] as IconData,
+                          size: 16,
+                        ),
+                        title: Text(entry.value['label'] as String),
+                      ),
+                    ),
+                  )
+                  .toList();
+            },
+            onSelected: (int value) {
+              switch (value) {
+                case 0:
+                  controller.editBooking();
+                  break;
+                case 1:
+                  controller.deleteBooking();
+                  break;
+              }
+            },
+          )
+        : const SizedBox.shrink();
   }
 }
 
@@ -310,6 +316,38 @@ class _UsersInfo extends StatelessWidget {
             color: theme.colorScheme.primary,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CarInfo extends StatelessWidget {
+  const _CarInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final carDetails = context.watch<BookingViewModel>().booking.carDetails;
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+      child: ListTile(
+        dense: true,
+        title: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: [carDetails.make, carDetails.model].join(' '),
+                style: theme.textTheme.bodyMedium,
+              ),
+              if (carDetails.year != null)
+                TextSpan(
+                  text: ' (${carDetails.year})',
+                  style: theme.textTheme.bodySmall,
+                ),
+            ],
+          ),
+        ),
+        subtitle: Text(carDetails.plate),
       ),
     );
   }
@@ -434,49 +472,6 @@ class _BookingNotes extends StatelessWidget {
   }
 }
 
-class _BottomActions extends StatelessWidget {
-  const _BottomActions({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final listener = context.watch<BookingViewModel>();
-    final controller = context.read<BookingViewModel>();
-    return controller.role != Role.admin &&
-            listener.booking.status == BookingStatus.completed
-        ? const SizedBox.shrink()
-        : Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              listener.booking.status == BookingStatus.completed
-                  ? Button(
-                      label: string.of(context).receipt,
-                      disable: true,
-                      margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(16)),
-                      onPressed: () => controller.generateReceipt(),
-                    )
-                  : Button(
-                      label: string.of(context).complete,
-                      loading: listener.isLoading(
-                          key: 'completing_booking', orElse: false),
-                      disable: !listener.allServicesCompleted,
-                      margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(16)),
-                      onPressed: controller.role == Role.mechanic
-                          ? () => showModalBottomSheet(
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                barrierColor: Colors.transparent,
-                                builder: (context) => const AddNotesView(),
-                              ).then(
-                                (notes) => controller
-                                    .completeBooking(notes as String?),
-                              )
-                          : () => controller.completeBooking(),
-                    ),
-            ],
-          );
-  }
-}
-
 class _PaymentSummary extends StatelessWidget {
   const _PaymentSummary({super.key});
 
@@ -517,5 +512,49 @@ class _PaymentSummary extends StatelessWidget {
             ),
           )
         : const SizedBox.shrink();
+  }
+}
+
+class _BottomActions extends StatelessWidget {
+  const _BottomActions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final listener = context.watch<BookingViewModel>();
+    final controller = context.read<BookingViewModel>();
+    return controller.role != Role.admin &&
+            listener.booking.status == BookingStatus.completed
+        ? const SizedBox.shrink()
+        : Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              controller.role == Role.admin &&
+                      listener.booking.status == BookingStatus.completed
+                  ? Button(
+                      label: string.of(context).receipt,
+                      margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(16)),
+                      onPressed: () => controller.generateReceipt(),
+                      
+                    )
+                  : Button(
+                      label: string.of(context).complete,
+                      loading: listener.isLoading(
+                          key: 'completing_booking', orElse: false),
+                      disable: !listener.allServicesCompleted,
+                      margin: EdgeInsets.fromLTRB(16, 0, 16, dimen.bottom(16)),
+                      onPressed: controller.role == Role.mechanic
+                          ? () => showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                barrierColor: Colors.transparent,
+                                builder: (context) => const AddNotesView(),
+                              ).then(
+                                (notes) => controller
+                                    .completeBooking(notes as String?),
+                              )
+                          : () => controller.completeBooking(),
+                    ),
+            ],
+          );
   }
 }

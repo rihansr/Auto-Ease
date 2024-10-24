@@ -1,6 +1,5 @@
-import 'package:autoease/core/service/firestore_service.dart';
 import 'package:flutter/material.dart';
-
+import '../../../core/service/firestore_service.dart';
 import '../../../core/shared/validator.dart';
 import '../../../core/viewmodel/base_viewmodel.dart';
 import '../../booking/model/service_model.dart';

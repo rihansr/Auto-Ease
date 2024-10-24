@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../core/shared/dimens.dart';
+import '../../../core/shared/drawables.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/widget/base_widget.dart';
@@ -83,21 +85,32 @@ class _Bookings extends StatelessWidget {
     bool isLoading =
         listener.isLoading(key: 'fetching_bookings', orElse: false);
     final bookings = isLoading ? List.filled(3, null) : listener.bookings;
-    return SliverSkeletonizer(
-      enabled: isLoading,
-      child: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final booking = bookings[index];
-            return BookingItem(
-              key: ValueKey(booking?.uid ?? index),
-              booking: booking,
-              role: role,
-            );
-          },
-          childCount: bookings.length,
-        ),
-      ),
-    );
+    return bookings.isEmpty
+        ? SliverFillRemaining(
+            child: Center(
+              child: Transform.scale(
+                scale: 1.3,
+                child: LottieBuilder.asset(
+                  drawable.empty,
+                ),
+              ),
+            ),
+          )
+        : SliverSkeletonizer(
+            enabled: isLoading,
+            child: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final booking = bookings[index];
+                  return BookingItem(
+                    key: ValueKey(booking?.uid ?? index),
+                    booking: booking,
+                    role: role,
+                  );
+                },
+                childCount: bookings.length,
+              ),
+            ),
+          );
   }
 }

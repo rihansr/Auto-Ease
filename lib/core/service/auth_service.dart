@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:autoease/core/shared/enums.dart';
-import 'package:autoease/core/shared/strings.dart';
-import 'package:autoease/core/shared/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart' show ScaffoldMessenger;
 import '../shared/debug.dart';
+import '../shared/enums.dart';
+import '../shared/strings.dart';
+import '../shared/styles.dart';
 import 'navigation_service.dart';
 
 final authService = _AuthService.value;

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:autoease/core/shared/strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -7,10 +6,13 @@ import '../../../core/service/firestore_service.dart';
 import '../../../core/shared/debug.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/local_storage.dart';
+import '../../../core/shared/strings.dart';
 import '../../../core/viewmodel/base_viewmodel.dart';
 import '../model/booking_model.dart';
 import '../model/service_model.dart';
+import '../service/receipt_generator.dart';
 import '../view/new_booking_view.dart';
+import '../view/receipt_preview.dart';
 import 'bookings_viewmodel.dart';
 
 class BookingViewModel extends BaseViewModel {
@@ -158,7 +160,12 @@ class BookingViewModel extends BaseViewModel {
     setBusy(false, key: 'completing_booking');
   }
 
-  Future<void> generateReceipt() async {}
+  generateReceipt() => showCupertinoModalPopup(
+        context: context,
+        builder: (_) => ReceiptPreview(
+          generator: (format) => ReceiptGenerator(booking: booking).generate(),
+        ),
+      );
 
   @override
   void dispose() {

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../shared/constants.dart';
 
@@ -74,7 +75,10 @@ class Button<T> extends StatelessWidget {
       padding: margin,
       child: InkWell(
         onTap: () {
-          if (!(disable || loading)) onPressed?.call();
+          if (!(disable || loading)) {
+            HapticFeedback.selectionClick();
+            onPressed?.call();
+          }
         },
         splashColor: Colors.transparent,
         focusColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../core/shared/enums.dart';
 import '../../../core/shared/strings.dart';
 import '../../../core/shared/styles.dart';
@@ -27,7 +28,9 @@ class BookingItem extends StatelessWidget {
       onTap: booking == null
           ? null
           : () {
-              if (role == Role.admin || booking?.status != BookingStatus.pending) {
+              HapticFeedback.selectionClick();
+              if (role == Role.admin ||
+                  booking?.status != BookingStatus.pending) {
                 showCupertinoModalPopup(
                   context: context,
                   barrierDismissible: false,

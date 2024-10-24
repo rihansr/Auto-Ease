@@ -35,6 +35,8 @@ dependencies:
 
   # State Management
   provider: ^6.1.2
+
+  # Receipt
   
   # Firebase (Auth & Datastore)
   firebase_core: ^3.6.0
@@ -47,6 +49,9 @@ dependencies:
   # Utils
   intl: ^0.19.0
   collection: ^1.18.0
+  pdf: ^3.11.1
+  printing: ^5.13.3
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:

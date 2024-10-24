@@ -13,11 +13,11 @@ class _Style {
 
   final defaultBlur = ImageFilter.blur(sigmaX: 4, sigmaY: 4);
 
-  final defaultDecoration = BoxDecoration(
-    shape: BoxShape.rectangle,
-    borderRadius: BorderRadius.circular(12),
-    color: Theme.of(navigator.context).cardColor,
-  );
+  BoxDecoration defaultDecoration(BuildContext context) => BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(12),
+        color: Theme.of(context).cardColor,
+      );
 
   Widget avatar(String label) {
     final theme = Theme.of(navigator.context);
